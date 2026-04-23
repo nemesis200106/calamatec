@@ -4,91 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 20px; }
-        .grid-bancos { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 20px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f8fafc; 
+            padding: 40px 20px;
+            margin: 0;
         }
-        .banco-card { 
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center; 
+            color: #1e293b; 
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        .bancos-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 25px; 
+        }
+        .card-banco { 
             background: white; 
+            border: 1px solid #e2e8f0;
             border-radius: 12px; 
-            padding: 15px; 
+            padding: 25px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            height: 140px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 120px;
         }
-        .banco-card:hover { transform: translateY(-5px); }
-        .banco-card img { 
-            max-width: 80%; 
-            max-height: 70px; 
+        .card-banco:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-color: #cbd5e1;
+        }
+        .card-banco img { 
+            max-width: 100%; 
+            max-height: 80px; 
             object-fit: contain; 
+            filter: grayscale(10%);
         }
-        .banco-nombre { margin-top: 10px; font-size: 14px; font-weight: bold; color: #333; text-align: center; }
+        .card-banco:hover img {
+            filter: grayscale(0%);
+        }
     </style>
 </head>
 <body>
 
-<h1 style="text-align: center; color: #1a365d; margin-bottom: 30px;">Bancos de Bolivia</h1>
+<div class="container">
+    <h1>BANCOS DE BOLIVIA</h1>
 
-<div class="grid-bancos">
+    <div class="bancos-grid">
 
-    <div class="banco-card">
-        <img src="[attachment_3](attachment)" alt="Banco Unión">
-        <div class="banco-nombre">Banco Unión</div>
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/12117589408558460212_0" alt="Banco Unión">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/13807900314995910404_0" alt="Banco Mercantil Santa Cruz">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/9746065459449703901_0" alt="BNB">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/6159733034284676385_0" alt="Banco BISA">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/1980388360664456553_0" alt="Banco Ganadero">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/541721772205612632_0" alt="Banco Económico">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/17349852891834329096_0" alt="BCP Bolivia">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/13013625709345868085_0" alt="BancoSol">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/5122176529796992773_0" alt="Banco Fortaleza">
+        </div>
+
+        <div class="card-banco">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/5922920202600857002_0" alt="Banco FIE">
+        </div>
+
     </div>
-
-    <div class="banco-card">
-        <img src="[attachment_1](attachment)" alt="Banco Mercantil Santa Cruz">
-        <div class="banco-nombre">Mercantil Santa Cruz</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_2](attachment)" alt="BNB">
-        <div class="banco-nombre">BNB</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_4](attachment)" alt="Banco BISA">
-        <div class="banco-nombre">Banco BISA</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_5](attachment)" alt="Banco Ganadero">
-        <div class="banco-nombre">Banco Ganadero</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_7](attachment)" alt="Banco Económico">
-        <div class="banco-nombre">Banco Económico</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_6](attachment)" alt="BCP">
-        <div class="banco-nombre">BCP</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_0](attachment)" alt="BancoSol">
-        <div class="banco-nombre">BancoSol</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_9](attachment)" alt="Banco Fortaleza">
-        <div class="banco-nombre">Banco Fortaleza</div>
-    </div>
-
-    <div class="banco-card">
-        <img src="[attachment_8](attachment)" alt="Banco FIE">
-        <div class="banco-nombre">Banco FIE</div>
-    </div>
-
 </div>
 
 </body>
