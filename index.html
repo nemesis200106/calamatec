@@ -3,212 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Despiece Pro - Melamina</title>
+    <title>Melamina Pro - Optimizador de Despiece</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-            --accent: #0f172a;
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #2dd4bf;
+            --primary-hover: #14b8a6;
+            --border: #334155;
+            --accent: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             padding: 20px;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 900px;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: var(--accent);
-            color: white;
+        @media (max-width: 900px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .panel h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-
-        .card {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        .input-group {
+            margin-bottom: 18px;
         }
 
-        h2 { font-size: 1.2rem; margin-top: 0; color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-
-        .input-group { margin-bottom: 15px; }
-
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1rem;
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        button {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 12px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 8px;
             font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
         }
 
-        button:hover { background: #1d4ed8; }
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-calcular {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-calcular:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Tabla de Resultados */
+        .table-container {
+            overflow-x: auto;
+        }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
+            margin-top: 10px;
         }
 
         th, td {
             text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        th { background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; }
-
-        .summary {
-            margin-top: 20px;
             padding: 15px;
-            background: #dcfce7;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #166534;
+            border-bottom: 1px solid var(--border);
         }
 
-        .footer-note { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
+        th {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+
+        .id-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .obs-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Guía Visual */
+        .visual-guide {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .legend {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .print-btn {
+            background-color: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .print-btn:hover {
+            background-color: var(--text-muted);
+            color: var(--bg-color);
+        }
+
+        @media print {
+            body { background-color: white; color: black; }
+            .panel { box-shadow: none; border: 1px solid #ccc; background-color: white; }
+            .btn-calcular, .print-btn { display: none; }
+            .input-group input, .input-group select { border: none; background: transparent; padding: 0; color: black;}
+            .id-badge { background-color: #333; color: white; }
+            th { background-color: #f0f0f0; color: black; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Optimizador de Despiece v1.0</h1>
-        <p>Generador automático para muebles de melamina</p>
-    </header>
+    <div class="header">
+        <h1>Melamina Pro</h1>
+        <p>Sistema de Ingeniería y Despiece Automático</p>
+    </div>
 
-    <div class="grid">
-        <div class="card">
-            <h2>Dimensiones Generales (mm)</h2>
+    <div class="app-grid">
+        <div class="panel">
+            <h2>1. Parámetros de Diseño</h2>
+            
             <div class="input-group">
-                <label>Alto Total</label>
-                <input type="number" id="alto" placeholder="Ej: 1800" value="600">
+                <label>Estructura / Modelo</label>
+                <select id="modelo">
+                    <option value="ropero">Ropero (Laterales completos + Zócalo)</option>
+                    <option value="gabinete">Gabinete Base (Caja estándar)</option>
+                    <option value="estanteria">Estantería (División central)</option>
+                </select>
             </div>
+
             <div class="input-group">
-                <label>Ancho Total</label>
-                <input type="number" id="ancho" placeholder="Ej: 800" value="800">
+                <label>Alto Total (mm)</label>
+                <input type="number" id="alto" value="1800">
             </div>
+
             <div class="input-group">
-                <label>Profundidad</label>
-                <input type="number" id="fondo" placeholder="Ej: 500" value="300">
+                <label>Ancho Total (mm)</label>
+                <input type="number" id="ancho" value="800">
             </div>
+
             <div class="input-group">
-                <label>Grosor de Melamina (mm)</label>
+                <label>Profundidad (mm)</label>
+                <input type="number" id="fondo" value="500">
+            </div>
+
+            <div class="input-group">
+                <label>Espesor de Melamina</label>
                 <select id="espesor">
                     <option value="15">15 mm</option>
                     <option value="18" selected>18 mm</option>
                 </select>
             </div>
-            <button onclick="calcularDespiece()">Generar Lista de Corte</button>
+
+            <button class="btn-calcular" onclick="generarDespiece()">Generar Planos</button>
         </div>
 
-        <div class="card">
-            <h2>Lista de Corte Optimizada</h2>
-            <div id="resultado">
-                <p style="color: #64748b;">Ingresa las medidas y presiona calcular...</p>
+        <div class="panel">
+            <h2>2. Lista de Corte Técnica</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cant.</th>
+                            <th>Descripción</th>
+                            <th>Medidas (mm)</th>
+                            <th>Instrucción de Taller</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_resultados">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                                Ingresa las medidas y haz clic en "Generar Planos"
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="visual-guide" id="guia_visual" style="display: none;">
+                <div style="flex: 1;">
+                    <h3 style="font-size: 1rem; margin-bottom: 15px; color: var(--primary);">Nomenclatura de Armado</h3>
+                    <div class="legend">
+                        <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div> Serie A: Soportes Verticales (Carga)</div>
+                        <div class="legend-item"><div class="legend-color" style="background:#2dd4bf;"></div> Serie B: Planos Horizontales</div>
+                        <div class="legend-item"><div class="legend-color" style="background:#f59e0b;"></div> Serie C: Zócalos / Refuerzos</div>
+                        <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div> Serie D: Fondos y Traseras</div>
+                    </div>
+                    <button class="print-btn" onclick="window.print()">🖨️ Imprimir Orden de Corte</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    function calcularDespiece() {
-        const H = parseFloat(document.getElementById('alto').value);
-        const W = parseFloat(document.getElementById('ancho').value);
-        const D = parseFloat(document.getElementById('fondo').value);
-        const E = parseFloat(document.getElementById('espesor').value);
+    <script>
+        function generarDespiece() {
+            // 1. Capturar datos del formulario
+            const modelo = document.getElementById('modelo').value;
+            const H = parseFloat(document.getElementById('alto').value);
+            const W = parseFloat(document.getElementById('ancho').value);
+            const D = parseFloat(document.getElementById('fondo').value);
+            const E = parseFloat(document.getElementById('espesor').value);
 
-        if(!H || !W || !D) return alert("Por favor completa las medidas");
+            if(!H || !W || !D) {
+                alert("Por favor ingresa todas las medidas numéricas.");
+                return;
+            }
 
-        // Lógica de Despiece para un mueble base (Gabinete estándar)
-        // Laterales van por fuera de la base y techo
-        const lateral_H = H;
-        const lateral_W = D;
+            let filasHTML = '';
 
-        const horizontal_H = W - (2 * E);
-        const horizontal_W = D;
+            // 2. Lógica Matemática por Modelo
+            if (modelo === 'ropero') {
+                const zocalo_H = 100; // Alto estándar del zócalo
 
-        const fondo_H = H - 6; // Descuento para ranura o fondo
-        const fondo_W = W - 6;
+                filasHTML += crearFila('A1, A2', 2, 'Laterales Largos', H, D, 'Tapacanto 1 lado largo. Carga estructural.');
+                filasHTML += crearFila('B1', 1, 'Techo', W - (2*E), D, 'Tapacanto 1 lado largo. Fijar entre laterales.');
+                filasHTML += crearFila('B2', 1, 'Piso Inferior', W - (2*E), D, 'Tapacanto 1 lado largo. Instalar sobre zócalos.');
+                filasHTML += crearFila('C1, C2', 2, 'Zócalos (Frente/Atrás)', W - (2*E), zocalo_H, 'Sin tapacanto. Piezas de refuerzo base.');
+                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - zocalo_H - 3, W - 6, 'Apernar o clavar por detrás del mueble.');
+            
+            } else if (modelo === 'gabinete') {
+                filasHTML += crearFila('A1, A2', 2, 'Laterales', H, D, 'Tapacanto 1 lado largo.');
+                filasHTML += crearFila('B1, B2', 2, 'Base y Techo', W - (2*E), D, 'Fijar por dentro de los laterales.');
+                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - 6, W - 6, 'Hacer ranura a 15mm del borde trasero.');
+            
+            } else if (modelo === 'estanteria') {
+                filasHTML += crearFila('A1, A2', 2, 'Laterales', H, D, 'Tapacanto frontal.');
+                filasHTML += crearFila('B1, B2', 2, 'Base y Techo', W - (2*E), D, 'Tapacanto frontal.');
+                filasHTML += crearFila('B3', 1, 'Estante Fijo Central', W - (2*E), D, 'Tapacanto frontal. Centrado estructural.');
+                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - 6, W - 6, 'Opcional según requerimiento.');
+            }
 
-        const html = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pieza</th>
-                        <th>Cant.</th>
-                        <th>Medidas (mm)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Laterales</td>
-                        <td>2</td>
-                        <td>${lateral_H} x ${lateral_W}</td>
-                    </tr>
-                    <tr>
-                        <td>Base y Techo</td>
-                        <td>2</td>
-                        <td>${horizontal_H} x ${horizontal_W}</td>
-                    </tr>
-                    <tr>
-                        <td>Fondo (MDF 3mm)</td>
-                        <td>1</td>
-                        <td>${fondo_H} x ${fondo_W}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="summary">
-                Total de piezas: 5 <br>
-                Estructura: Caja cerrada profesional.
-            </div>
-            <p class="footer-note">* Descuento automático de espesor (${E}mm) aplicado.</p>
-            <button onclick="window.print()" style="margin-top:10px; background:#64748b;">Imprimir Lista</button>
-        `;
+            // 3. Inyectar resultados en la tabla
+            document.getElementById('tabla_resultados').innerHTML = filasHTML;
+            document.getElementById('guia_visual').style.display = 'flex';
+        }
 
-        document.getElementById('resultado').innerHTML = html;
-    }
-</script>
+        // Función de apoyo para dibujar las filas de la tabla
+        function crearFila(id, cant, desc, dim1, dim2, obs) {
+            // Asegurar redondeo técnico a 1 decimal
+            const anchoCort = Math.round(dim1 * 10) / 10;
+            const largoCort = Math.round(dim2 * 10) / 10;
 
+            return `
+                <tr>
+                    <td><span class="id-badge">${id}</span></td>
+                    <td style="font-weight:bold; text-align:center;">${cant}</td>
+                    <td style="font-weight:600;">${desc}</td>
+                    <td style="font-family: monospace; font-size: 1.1rem;">${anchoCort} x ${largoCort}</td>
+                    <td class="obs-text">${obs}</td>
+                </tr>
+            `;
+        }
+    </script>
 </body>
 </html>
