@@ -3,106 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Despiece Pro - Melamina</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f8fafc; 
-            padding: 40px 20px;
-            margin: 0;
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --accent: #0f172a;
         }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
         .container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
-        h1 {
-            text-align: center; 
-            color: #1e293b; 
-            margin-bottom: 40px;
-            font-size: 2.5rem;
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--accent);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
-        .bancos-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-            gap: 25px; 
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
-        .card-banco { 
-            background: white; 
-            border: 1px solid #e2e8f0;
-            border-radius: 12px; 
-            padding: 25px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            height: 120px;
+
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
         }
-        .card-banco:hover { 
-            transform: translateY(-8px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            border-color: #cbd5e1;
+
+        h2 { font-size: 1.2rem; margin-top: 0; color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+
+        .input-group { margin-bottom: 15px; }
+
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
         }
-        .card-banco img { 
-            max-width: 100%; 
-            max-height: 80px; 
-            object-fit: contain; 
-            filter: grayscale(10%);
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem;
         }
-        .card-banco:hover img {
-            filter: grayscale(0%);
+
+        button:hover { background: #1d4ed8; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
         }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th { background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; }
+
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #dcfce7;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .footer-note { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>BANCOS DE BOLIVIA</h1>
+    <header>
+        <h1>Optimizador de Despiece v1.0</h1>
+        <p>Generador automático para muebles de melamina</p>
+    </header>
 
-    <div class="bancos-grid">
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/12117589408558460212_0" alt="Banco Unión">
+    <div class="grid">
+        <div class="card">
+            <h2>Dimensiones Generales (mm)</h2>
+            <div class="input-group">
+                <label>Alto Total</label>
+                <input type="number" id="alto" placeholder="Ej: 1800" value="600">
+            </div>
+            <div class="input-group">
+                <label>Ancho Total</label>
+                <input type="number" id="ancho" placeholder="Ej: 800" value="800">
+            </div>
+            <div class="input-group">
+                <label>Profundidad</label>
+                <input type="number" id="fondo" placeholder="Ej: 500" value="300">
+            </div>
+            <div class="input-group">
+                <label>Grosor de Melamina (mm)</label>
+                <select id="espesor">
+                    <option value="15">15 mm</option>
+                    <option value="18" selected>18 mm</option>
+                </select>
+            </div>
+            <button onclick="calcularDespiece()">Generar Lista de Corte</button>
         </div>
 
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/13807900314995910404_0" alt="Banco Mercantil Santa Cruz">
+        <div class="card">
+            <h2>Lista de Corte Optimizada</h2>
+            <div id="resultado">
+                <p style="color: #64748b;">Ingresa las medidas y presiona calcular...</p>
+            </div>
         </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/9746065459449703901_0" alt="BNB">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/6159733034284676385_0" alt="Banco BISA">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/1980388360664456553_0" alt="Banco Ganadero">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/541721772205612632_0" alt="Banco Económico">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/17349852891834329096_0" alt="BCP Bolivia">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/13013625709345868085_0" alt="BancoSol">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/5122176529796992773_0" alt="Banco Fortaleza">
-        </div>
-
-        <div class="card-banco">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/5922920202600857002_0" alt="Banco FIE">
-        </div>
-
     </div>
 </div>
+
+<script>
+    function calcularDespiece() {
+        const H = parseFloat(document.getElementById('alto').value);
+        const W = parseFloat(document.getElementById('ancho').value);
+        const D = parseFloat(document.getElementById('fondo').value);
+        const E = parseFloat(document.getElementById('espesor').value);
+
+        if(!H || !W || !D) return alert("Por favor completa las medidas");
+
+        // Lógica de Despiece para un mueble base (Gabinete estándar)
+        // Laterales van por fuera de la base y techo
+        const lateral_H = H;
+        const lateral_W = D;
+
+        const horizontal_H = W - (2 * E);
+        const horizontal_W = D;
+
+        const fondo_H = H - 6; // Descuento para ranura o fondo
+        const fondo_W = W - 6;
+
+        const html = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pieza</th>
+                        <th>Cant.</th>
+                        <th>Medidas (mm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Laterales</td>
+                        <td>2</td>
+                        <td>${lateral_H} x ${lateral_W}</td>
+                    </tr>
+                    <tr>
+                        <td>Base y Techo</td>
+                        <td>2</td>
+                        <td>${horizontal_H} x ${horizontal_W}</td>
+                    </tr>
+                    <tr>
+                        <td>Fondo (MDF 3mm)</td>
+                        <td>1</td>
+                        <td>${fondo_H} x ${fondo_W}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="summary">
+                Total de piezas: 5 <br>
+                Estructura: Caja cerrada profesional.
+            </div>
+            <p class="footer-note">* Descuento automático de espesor (${E}mm) aplicado.</p>
+            <button onclick="window.print()" style="margin-top:10px; background:#64748b;">Imprimir Lista</button>
+        `;
+
+        document.getElementById('resultado').innerHTML = html;
+    }
+</script>
 
 </body>
 </html>
