@@ -3,373 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melamina Pro - Optimizador de Despiece</title>
+    <title>Melamina Pro 7.0 - Master Commercial</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --panel-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #2dd4bf;
-            --primary-hover: #14b8a6;
-            --border: #334155;
-            --accent: #3b82f6;
+            --bg-color: #0f172a; --panel-bg: #1e293b; --text-main: #f8fafc;
+            --text-muted: #94a3b8; --primary: #f43f5e; --primary-hover: #e11d48;
+            --border: #334155; --accent: #0ea5e9;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            color: var(--text-muted);
-        }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 900px) {
-            .app-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .panel {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        .panel h2 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 18px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            border-color: var(--primary);
-        }
-
-        .btn-calcular {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        .btn-calcular:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* Tabla de Resultados */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background-color: rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        td {
-            font-size: 1rem;
-        }
-
-        .id-badge {
-            background-color: var(--accent);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        .obs-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Guía Visual */
-        .visual-guide {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .legend {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 20px; line-height: 1.6; }
         
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-        }
+        .header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .header h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 5px; }
 
-        .print-btn {
-            background-color: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        
-        .print-btn:hover {
-            background-color: var(--text-muted);
-            color: var(--bg-color);
-        }
+        .app-grid { display: grid; grid-template-columns: 450px 1fr; gap: 20px; max-width: 1500px; margin: 0 auto; }
+        @media (max-width: 1024px) { .app-grid { grid-template-columns: 1fr; } }
 
-        @media print {
-            body { background-color: white; color: black; }
-            .panel { box-shadow: none; border: 1px solid #ccc; background-color: white; }
-            .btn-calcular, .print-btn { display: none; }
-            .input-group input, .input-group select { border: none; background: transparent; padding: 0; color: black;}
-            .id-badge { background-color: #333; color: white; }
-            th { background-color: #f0f0f0; color: black; }
-        }
+        .panel { background-color: var(--panel-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column;}
+        .panel h2 { font-size: 1.1rem; margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+        /* Filtros */
+        .filtros { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; }
+        .filtros::-webkit-scrollbar { height: 4px; }
+        .filtros::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .btn-filtro { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; white-space: nowrap; transition: all 0.2s; }
+        .btn-filtro:hover { border-color: var(--primary); color: var(--text-main); }
+        .btn-filtro.activo { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: bold; }
+
+        /* Catálogo */
+        .catalog-container { max-height: 450px; overflow-y: auto; padding-right: 10px; margin-bottom: 20px; border: 1px solid var(--border); border-radius: 8px; background: rgba(0,0,0,0.2); padding: 10px; }
+        .catalog-container::-webkit-scrollbar { width: 8px; }
+        .catalog-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        .model-card { background-color: var(--bg-color); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; }
+        .model-card:hover { border-color: var(--primary); }
+        .model-card.active { border-color: var(--primary); background-color: rgba(244, 63, 94, 0.1); box-shadow: 0 0 10px rgba(244,63,94,0.2); }
+        .model-icon { font-size: 2.2rem; margin-bottom: 5px; }
+        .model-name { font-weight: 600; font-size: 0.85rem; line-height: 1.2; }
+
+        /* Controles */
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        .input-group input, .input-group select { width: 100%; padding: 10px; background-color: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; outline: none; }
+        .input-group input:focus { border-color: var(--primary); }
+
+        .btn-calcular { width: 100%; padding: 15px; background-color: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: background 0.3s; }
+        .btn-calcular:hover { background-color: var(--primary-hover); }
+
+        /* Resultados */
+        .budget-panel { background-color: rgba(244, 63, 94, 0.1); border: 1px solid var(--primary); border-radius: 8px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .budget-info h3 { color: var(--primary); font-size: 1rem; margin-bottom: 5px; }
+        .budget-number { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; }
+        .id-badge { background-color: var(--border); color: var(--text-main); padding: 3px 6px; border-radius: 4px; font-family: monospace; font-size: 0.8rem; }
+        .obs-text { color: var(--text-muted); font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Melamina Pro</h1>
-        <p>Sistema de Ingeniería y Despiece Automático</p>
+        <h1>Melamina Pro 7.0</h1>
+        <p>Catálogo Master - +30 Diseños Comerciales Integrados</p>
     </div>
 
     <div class="app-grid">
         <div class="panel">
-            <h2>1. Parámetros de Diseño</h2>
+            <h2>1. Seleccionar Diseño</h2>
             
-            <div class="input-group">
-                <label>Estructura / Modelo</label>
-                <select id="modelo">
-                    <option value="ropero">Ropero (Laterales completos + Zócalo)</option>
-                    <option value="gabinete">Gabinete Base (Caja estándar)</option>
-                    <option value="estanteria">Estantería (División central)</option>
-                </select>
+            <div class="filtros" id="filtrosUI">
+                <button class="btn-filtro activo" onclick="filtrarCatalogo('Todos')">Todos</button>
+                <button class="btn-filtro" onclick="filtrarCatalogo('Taller')">Taller/Oficina</button>
+                <button class="btn-filtro" onclick="filtrarCatalogo('Dormitorio')">Dormitorios</button>
+                <button class="btn-filtro" onclick="filtrarCatalogo('Sala')">Sala/TV</button>
+                <button class="btn-filtro" onclick="filtrarCatalogo('Organizacion')">Libreros/Estantes</button>
+                <button class="btn-filtro" onclick="filtrarCatalogo('Cocina')">Cocina/Baño</button>
             </div>
 
-            <div class="input-group">
-                <label>Alto Total (mm)</label>
-                <input type="number" id="alto" value="1800">
+            <div class="catalog-container">
+                <div class="model-grid" id="catalogoUI"></div>
             </div>
 
-            <div class="input-group">
-                <label>Ancho Total (mm)</label>
-                <input type="number" id="ancho" value="800">
+            <input type="hidden" id="modeloSeleccionado" value="">
+
+            <h2>2. Medidas a Fabricar (mm)</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Alto Total</label>
+                    <input type="number" id="alto" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Ancho Total</label>
+                    <input type="number" id="ancho" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Profundidad</label>
+                    <input type="number" id="fondo" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Espesor</label>
+                    <select id="espesor">
+                        <option value="15">15 mm</option>
+                        <option value="18" selected>18 mm</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label>Profundidad (mm)</label>
-                <input type="number" id="fondo" value="500">
-            </div>
-
-            <div class="input-group">
-                <label>Espesor de Melamina</label>
-                <select id="espesor">
-                    <option value="15">15 mm</option>
-                    <option value="18" selected>18 mm</option>
-                </select>
-            </div>
-
-            <button class="btn-calcular" onclick="generarDespiece()">Generar Planos</button>
+            <button class="btn-calcular" onclick="procesarProyecto()">Calcular Despiece</button>
         </div>
 
         <div class="panel">
-            <h2>2. Lista de Corte Técnica</h2>
+            <h2>3. Orden de Corte y Producción</h2>
             
-            <div class="table-container">
+            <div class="budget-panel" id="panelPresupuesto" style="display: none;">
+                <div class="budget-info">
+                    <h3>Estimación de Melamina</h3>
+                    <p style="font-size: 0.8rem; color: #94a3b8;">Plancha estándar 2.44x1.83m | 20% margen corte</p>
+                </div>
+                <div class="budget-number" id="planchasNecesarias">0</div>
+            </div>
+
+            <div style="overflow-x: auto; max-height: 600px; overflow-y: auto;">
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Cant.</th>
-                            <th>Descripción</th>
+                            <th>Cant</th>
+                            <th>Pieza</th>
                             <th>Medidas (mm)</th>
-                            <th>Instrucción de Taller</th>
+                            <th>Especificaciones</th>
                         </tr>
                     </thead>
                     <tbody id="tabla_resultados">
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 40px;">
-                                Ingresa las medidas y haz clic en "Generar Planos"
-                            </td>
-                        </tr>
+                        <tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">Catálogo cargado. Selecciona un diseño para iniciar.</td></tr>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="visual-guide" id="guia_visual" style="display: none;">
-                <div style="flex: 1;">
-                    <h3 style="font-size: 1rem; margin-bottom: 15px; color: var(--primary);">Nomenclatura de Armado</h3>
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div> Serie A: Soportes Verticales (Carga)</div>
-                        <div class="legend-item"><div class="legend-color" style="background:#2dd4bf;"></div> Serie B: Planos Horizontales</div>
-                        <div class="legend-item"><div class="legend-color" style="background:#f59e0b;"></div> Serie C: Zócalos / Refuerzos</div>
-                        <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div> Serie D: Fondos y Traseras</div>
-                    </div>
-                    <button class="print-btn" onclick="window.print()">🖨️ Imprimir Orden de Corte</button>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function generarDespiece() {
-            // 1. Capturar datos del formulario
-            const modelo = document.getElementById('modelo').value;
+        // BASE DE DATOS MASTER (30+ Modelos Comerciales)
+        const baseDatosMuebles = [
+            // TALLER Y OFICINA (GAMER/TRABAJO)
+            { id: 'mesa_microsoldadura', nombre: 'Mesa Técnica Microsoldadura', cat: 'Taller', icono: '🔬', defH: 1500, defW: 1600, defD: 750, tipo: 'mesa_repisa' },
+            { id: 'mesa_gamer_pro', nombre: 'Escritorio Gamer Pro', cat: 'Taller', icono: '🎮', defH: 750, defW: 1500, defD: 650, tipo: 'mesa_gamer' },
+            { id: 'escritorio_L', nombre: 'Escritorio en L Gerencial', cat: 'Taller', icono: '🖥️', defH: 750, defW: 1800, defD: 1500, tipo: 'escritorio_L' },
+            { id: 'escritorio_simple', nombre: 'Escritorio Home Office', cat: 'Taller', icono: '💻', defH: 750, defW: 1200, defD: 600, tipo: 'escritorio' },
+            { id: 'mesa_reunion', nombre: 'Mesa de Reuniones', cat: 'Taller', icono: '🤝', defH: 750, defW: 2400, defD: 1000, tipo: 'mesa_simple' },
+
+            // DORMITORIO
+            { id: 'ropero_2p', nombre: 'Ropero 2 Puertas', cat: 'Dormitorio', icono: '🚪', defH: 2000, defW: 800, defD: 500, tipo: 'ropero' },
+            { id: 'ropero_4p', nombre: 'Ropero 4 Puertas Estético', cat: 'Dormitorio', icono: '🚪', defH: 2200, defW: 1600, defD: 550, tipo: 'ropero_doble' },
+            { id: 'ropero_6p', nombre: 'Closet 6 Puertas Master', cat: 'Dormitorio', icono: '🚪', defH: 2400, defW: 2400, defD: 600, tipo: 'ropero_triple' },
+            { id: 'cama_flotante', nombre: 'Cama Base Flotante', cat: 'Dormitorio', icono: '🛌', defH: 300, defW: 1500, defD: 1900, tipo: 'cama_flotante' },
+            { id: 'cama_cajones', nombre: 'Cama con Cajoneras', cat: 'Dormitorio', icono: '🛌', defH: 400, defW: 1500, defD: 1900, tipo: 'cama_cajones' },
+            { id: 'velador_2c', nombre: 'Velador Moderno (2 Caj)', cat: 'Dormitorio', icono: '🛏️', defH: 550, defW: 450, defD: 400, cajones: 2, tipo: 'cajonera' },
+            { id: 'cajonera_3c', nombre: 'Cómoda 3 Cajones', cat: 'Dormitorio', icono: '🗄️', defH: 750, defW: 800, defD: 450, cajones: 3, tipo: 'cajonera' },
+            { id: 'cajonera_4c', nombre: 'Cómoda 4 Cajones', cat: 'Dormitorio', icono: '🗄️', defH: 950, defW: 800, defD: 450, cajones: 4, tipo: 'cajonera' },
+            { id: 'cajonera_5c', nombre: 'Sifonier 5 Cajones', cat: 'Dormitorio', icono: '🗄️', defH: 1150, defW: 600, defD: 450, cajones: 5, tipo: 'cajonera' },
+
+            // ORGANIZACIÓN Y ESTANTES
+            { id: 'zapatero_vertical', nombre: 'Zapatero Vertical Alto', cat: 'Organizacion', icono: '👞', defH: 1800, defW: 500, defD: 300, tipo: 'zapatero' },
+            { id: 'zapatero_banco', nombre: 'Banco Zapatero Entrada', cat: 'Organizacion', icono: '👟', defH: 450, defW: 1000, defD: 350, tipo: 'zapatero_bajo' },
+            { id: 'librero_clasico', nombre: 'Librero Clásico', cat: 'Organizacion', icono: '📚', defH: 1800, defW: 800, defD: 300, tipo: 'estante_abierto' },
+            { id: 'librero_montessori', nombre: 'Librero Infantil Montessori', cat: 'Organizacion', icono: '🧸', defH: 1000, defW: 800, defD: 350, tipo: 'estante_inclinado' },
+            { id: 'estante_cubos_4', nombre: 'Organizador 4 Cubos', cat: 'Organizacion', icono: '🧊', defH: 800, defW: 800, defD: 300, tipo: 'cubos' },
+            { id: 'estante_cubos_9', nombre: 'Organizador 9 Cubos', cat: 'Organizacion', icono: '🧊', defH: 1200, defW: 1200, defD: 300, tipo: 'cubos_grande' },
+            { id: 'torre_bano', nombre: 'Torre Organizadora Baño', cat: 'Organizacion', icono: '🧻', defH: 1600, defW: 400, defD: 300, tipo: 'estante_abierto' },
+
+            // SALA DE ESTAR / TV
+            { id: 'tv_rack_flotante', nombre: 'Rack TV Flotante Minimalista', cat: 'Sala', icono: '📺', defH: 350, defW: 1600, defD: 300, tipo: 'rack_flotante' },
+            { id: 'tv_rack_pie', nombre: 'Rack TV de Pie Nórdico', cat: 'Sala', icono: '📺', defH: 550, defW: 1800, defD: 400, tipo: 'rack_pie' },
+            { id: 'panel_tv', nombre: 'Panel de Muro para TV', cat: 'Sala', icono: '🖼️', defH: 1200, defW: 1800, defD: 60, tipo: 'panel' },
+            { id: 'mesa_centro_simple', nombre: 'Mesa de Centro Moderna', cat: 'Sala', icono: '☕', defH: 450, defW: 900, defD: 600, tipo: 'mesa_centro' },
+            { id: 'mesa_centro_elevable', nombre: 'Mesa Centro Elevable', cat: 'Sala', icono: '⚙️', defH: 450, defW: 1000, defD: 600, tipo: 'mesa_elevable' },
+
+            // COCINA
+            { id: 'mueble_lavaplatos', nombre: 'Mueble Lavaplatos 120', cat: 'Cocina', icono: '🚰', defH: 850, defW: 1200, defD: 500, tipo: 'gabinete_base' },
+            { id: 'gabinete_base_cocina', nombre: 'Gabinete Base Estándar', cat: 'Cocina', icono: '🥘', defH: 850, defW: 600, defD: 550, tipo: 'gabinete_base' },
+            { id: 'gabinete_aereo', nombre: 'Mueble Aéreo Cocina', cat: 'Cocina', icono: '🥫', defH: 600, defW: 800, defD: 320, tipo: 'gabinete_aereo' },
+            { id: 'isla_cocina', nombre: 'Isla Central Cocina', cat: 'Cocina', icono: '🍱', defH: 900, defW: 1400, defD: 600, tipo: 'isla' },
+            { id: 'despensa_alta', nombre: 'Mueble Despensa Alto', cat: 'Cocina', icono: '🥫', defH: 2000, defW: 600, defD: 500, tipo: 'ropero' }
+        ];
+
+        let categoriaActual = 'Todos';
+
+        function filtrarCatalogo(categoria) {
+            categoriaActual = categoria;
+            document.querySelectorAll('.btn-filtro').forEach(btn => {
+                btn.classList.remove('activo');
+                if (btn.innerText.includes(categoria) || (categoria === 'Todos' && btn.innerText === 'Todos')) btn.classList.add('activo');
+            });
+            renderizarCatalogo();
+        }
+
+        function renderizarCatalogo() {
+            const contenedor = document.getElementById('catalogoUI');
+            contenedor.innerHTML = '';
+            const mueblesFiltrados = categoriaActual === 'Todos' ? baseDatosMuebles : baseDatosMuebles.filter(m => m.cat === categoriaActual);
+            mueblesFiltrados.forEach(mueble => {
+                const activoClass = (document.getElementById('modeloSeleccionado').value === mueble.id) ? 'active' : '';
+                contenedor.innerHTML += `<div class="model-card ${activoClass}" id="card_${mueble.id}" onclick="seleccionarModelo('${mueble.id}')"><div class="model-icon">${mueble.icono}</div><div class="model-name">${mueble.nombre}</div></div>`;
+            });
+            if (mueblesFiltrados.length > 0 && !document.querySelector('.model-card.active')) seleccionarModelo(mueblesFiltrados[0].id);
+        }
+
+        function seleccionarModelo(idModelo) {
+            document.getElementById('modeloSeleccionado').value = idModelo;
+            document.querySelectorAll('.model-card').forEach(card => card.classList.remove('active'));
+            if(document.getElementById('card_' + idModelo)) document.getElementById('card_' + idModelo).classList.add('active');
+            const mueble = baseDatosMuebles.find(m => m.id === idModelo);
+            if(mueble) {
+                document.getElementById('alto').value = mueble.defH;
+                document.getElementById('ancho').value = mueble.defW;
+                document.getElementById('fondo').value = mueble.defD;
+            }
+        }
+
+        // MOTOR MATEMÁTICO COMPRIMIDO (Optimizado para procesar múltiples tipos de muebles)
+        function procesarProyecto() {
+            const idModelo = document.getElementById('modeloSeleccionado').value;
+            const mueble = baseDatosMuebles.find(m => m.id === idModelo);
+            const tipo = mueble ? mueble.tipo : 'estandar';
+            const cantCajones = mueble ? mueble.cajones : 0;
+            
             const H = parseFloat(document.getElementById('alto').value);
             const W = parseFloat(document.getElementById('ancho').value);
             const D = parseFloat(document.getElementById('fondo').value);
             const E = parseFloat(document.getElementById('espesor').value);
 
-            if(!H || !W || !D) {
-                alert("Por favor ingresa todas las medidas numéricas.");
-                return;
-            }
-
             let filasHTML = '';
+            let areaTotalM2 = 0;
 
-            // 2. Lógica Matemática por Modelo
-            if (modelo === 'ropero') {
-                const zocalo_H = 100; // Alto estándar del zócalo
-
-                filasHTML += crearFila('A1, A2', 2, 'Laterales Largos', H, D, 'Tapacanto 1 lado largo. Carga estructural.');
-                filasHTML += crearFila('B1', 1, 'Techo', W - (2*E), D, 'Tapacanto 1 lado largo. Fijar entre laterales.');
-                filasHTML += crearFila('B2', 1, 'Piso Inferior', W - (2*E), D, 'Tapacanto 1 lado largo. Instalar sobre zócalos.');
-                filasHTML += crearFila('C1, C2', 2, 'Zócalos (Frente/Atrás)', W - (2*E), zocalo_H, 'Sin tapacanto. Piezas de refuerzo base.');
-                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - zocalo_H - 3, W - 6, 'Apernar o clavar por detrás del mueble.');
-            
-            } else if (modelo === 'gabinete') {
-                filasHTML += crearFila('A1, A2', 2, 'Laterales', H, D, 'Tapacanto 1 lado largo.');
-                filasHTML += crearFila('B1, B2', 2, 'Base y Techo', W - (2*E), D, 'Fijar por dentro de los laterales.');
-                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - 6, W - 6, 'Hacer ranura a 15mm del borde trasero.');
-            
-            } else if (modelo === 'estanteria') {
-                filasHTML += crearFila('A1, A2', 2, 'Laterales', H, D, 'Tapacanto frontal.');
-                filasHTML += crearFila('B1, B2', 2, 'Base y Techo', W - (2*E), D, 'Tapacanto frontal.');
-                filasHTML += crearFila('B3', 1, 'Estante Fijo Central', W - (2*E), D, 'Tapacanto frontal. Centrado estructural.');
-                filasHTML += crearFila('D1', 1, 'Fondo (MDF 3mm)', H - 6, W - 6, 'Opcional según requerimiento.');
+            function addPieza(id, cant, desc, dim1, dim2, obs) {
+                const W_final = Math.round(dim1 * 10) / 10;
+                const L_final = Math.round(dim2 * 10) / 10;
+                if(W_final <= 0 || L_final <= 0) return; // Evitar medidas negativas
+                areaTotalM2 += ((W_final * L_final) / 1000000) * cant;
+                filasHTML += `<tr><td><span class="id-badge">${id}</span></td><td style="font-weight:bold; text-align:center;">${cant}</td><td style="font-weight:600;">${desc}</td><td style="font-family: monospace;">${W_final} x ${L_final}</td><td class="obs-text">${obs}</td></tr>`;
             }
 
-            // 3. Inyectar resultados en la tabla
+            // LÓGICAS DINÁMICAS AGRUPADAS
+            if (tipo === 'cajonera') {
+                const alto_frente = (H - 80) / cantCajones; 
+                addPieza('A1-2', 2, 'Laterales Estructura', H, D, 'Tapacanto frontal.');
+                addPieza('B1', 1, 'Cubierta Superior', W, D + 20, 'Sobresale 20mm al frente.');
+                addPieza('C1-2', 2, 'Zócalos (Frente/Atrás)', W - (2*E), 80, 'Elevación base.');
+                addPieza('C3-4', 2, 'Amarres Superiores', W - (2*E), 100, 'Fijación de cubierta.');
+                addPieza('F1-'+cantCajones, cantCajones, 'Frentes de Cajón', alto_frente - 3, W - (2*E) - 4, 'Descuento luz perimetral.');
+                addPieza('D1', 1, 'Fondo Trasero (MDF 3mm)', H - 80, W - 6, 'Apernar detrás.');
+            }
+            else if (tipo === 'ropero' || tipo === 'ropero_doble' || tipo === 'ropero_triple') {
+                const puertas = tipo === 'ropero' ? 2 : (tipo === 'ropero_doble' ? 4 : 6);
+                const divisores = (puertas / 2) - 1;
+                addPieza('A1-2', 2, 'Laterales Largos', H, D, 'Carga estructural principal.');
+                if (divisores > 0) addPieza('A3', divisores, 'Divisores Verticales Internos', H - 100 - (2*E), D - 20, 'Retirados 20mm del frente.');
+                addPieza('B1-2', 2, 'Techo y Piso', W - (2*E), D, 'Fijar interno a los laterales.');
+                addPieza('C1-2', 2, 'Zócalos Base', W - (2*E), 100, 'Refuerzo inferior.');
+                addPieza('P1-'+puertas, puertas, 'Puertas Batientes', H - 100 - 4, (W / puertas) - 4, 'Bisagras cazoleta 35mm.');
+                addPieza('D1', 1, 'Fondo (MDF 3mm)', H - 100 - 3, W - 6, 'Apernar por detrás.');
+            }
+            else if (tipo === 'mesa_repisa' || tipo === 'mesa_gamer') { // Microsoldadura / Gamer
+                const alto_mesa = 750; // Estándar o taburete ajustado en CSS
+                addPieza('B1', 1, 'Cubierta Principal', W, D, 'Tapacanto PVC grueso 2mm.');
+                addPieza('A1-2', 2, 'Patas Principales', alto_mesa - E, D - 50, 'Soporte cubierta.');
+                addPieza('C1', 1, 'Faldón Posterior (Estructural)', W - (2*E), 350, 'Da rigidez a la mesa.');
+                if (tipo === 'mesa_repisa') {
+                    addPieza('B2', 1, 'Repisa Alta (Instrumentos)', W, 300, 'Para Osciloscopio/Microscopio.');
+                    addPieza('A3-4', 2, 'Soportes Laterales Repisa', H - alto_mesa - E, 250, 'Montados sobre cubierta.');
+                } else {
+                    addPieza('B2', 1, 'Alzada Monitor', W - 400, 250, 'Repisa para pantallas.');
+                    addPieza('A3-4', 2, 'Soportes Alzada', 150, 200, 'Eleva monitores 15cm.');
+                }
+            }
+            else if (tipo === 'zapatero' || tipo === 'estante_abierto') {
+                const repisas = Math.floor(H / 300); 
+                addPieza('A1-2', 2, 'Laterales', H, D, 'Tapacanto frontal.');
+                addPieza('B1-2', 2, 'Techo y Base', W - (2*E), D, 'Internos.');
+                addPieza('B3', repisas, 'Repisas Interiores', W - (2*E), tipo === 'zapatero' ? D - 20 : D, 'Soporte zapatos o libros.');
+                if (tipo === 'zapatero') addPieza('P1-2', 2, 'Puertas Frontales', H - 4, (W/2) - 4, 'Bisagras de parche.');
+            }
+            else if (tipo === 'rack_flotante' || tipo === 'rack_pie') {
+                addPieza('B1', 1, 'Cubierta Superior', W, D, 'Tapacanto 3 lados.');
+                addPieza('B2', 1, 'Base Inferior', W - (2*E), D, 'Fijación interna.');
+                addPieza('A1-2', 2, 'Laterales', tipo === 'rack_pie' ? H - 100 - E : H - (2*E), D, 'Soporte.');
+                addPieza('A3', 1, 'División Central', tipo === 'rack_pie' ? H - 100 - (2*E) : H - (2*E), D - 20, 'Retirada al fondo.');
+                if (tipo === 'rack_pie') addPieza('C1-2', 2, 'Zócalos', W - (2*E), 100, 'Patas base.');
+                if (tipo === 'rack_flotante') addPieza('C1', 1, 'Listón de Cuelgue (Corte 45°)', W - (2*E), 100, 'French Cleat.');
+            }
+            else if (tipo === 'gabinete_base' || tipo === 'gabinete_aereo') {
+                addPieza('A1-2', 2, 'Laterales', H, D, 'Estructura.');
+                addPieza('B1-2', 2, 'Base / Techo', W - (2*E), D, 'Internos.');
+                if (tipo === 'gabinete_base') addPieza('C1-2', 2, 'Amarres (Reemplazan techo)', W - (2*E), 100, 'Para instalar cubiertas de granito.');
+                addPieza('D1', 1, 'Fondo (MDF)', H - 6, W - 6, 'Ranura a 15mm.');
+            }
+            else { // CATCH-ALL (Mueble Básico Universal)
+                addPieza('A1-2', 2, 'Laterales', H, D, 'Marco.');
+                addPieza('B1-2', 2, 'Base y Techo', W - (2*E), D, 'Horizontales.');
+            }
+
+            // CALCULAR MATERIAL FINAL
+            const planchasRaw = areaTotalM2 / (2.44 * 1.83 * 0.80);
+            let planchasEstimadas = Math.ceil(planchasRaw * 10) / 10;
+            if (planchasEstimadas < 0.1) planchasEstimadas = 0.5; 
+
             document.getElementById('tabla_resultados').innerHTML = filasHTML;
-            document.getElementById('guia_visual').style.display = 'flex';
+            document.getElementById('planchasNecesarias').innerText = planchasEstimadas + " un.";
+            document.getElementById('panelPresupuesto').style.display = 'flex';
         }
 
-        // Función de apoyo para dibujar las filas de la tabla
-        function crearFila(id, cant, desc, dim1, dim2, obs) {
-            // Asegurar redondeo técnico a 1 decimal
-            const anchoCort = Math.round(dim1 * 10) / 10;
-            const largoCort = Math.round(dim2 * 10) / 10;
-
-            return `
-                <tr>
-                    <td><span class="id-badge">${id}</span></td>
-                    <td style="font-weight:bold; text-align:center;">${cant}</td>
-                    <td style="font-weight:600;">${desc}</td>
-                    <td style="font-family: monospace; font-size: 1.1rem;">${anchoCort} x ${largoCort}</td>
-                    <td class="obs-text">${obs}</td>
-                </tr>
-            `;
-        }
+        filtrarCatalogo('Todos');
     </script>
 </body>
 </html>
