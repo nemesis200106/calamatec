@@ -3,309 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVTec | Servicio Técnico y Homologaciones en Calama</title>
+    <title>CVTec | Homologación y Servicio Técnico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Estilos Generales */
         :root {
-            --primary-color: #0056b3;
-            --secondary-color: #f8f9fa;
-            --text-color: #333;
-            --accent-color: #ff9800;
+            --primary-blue: #0046c0;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --accent-green: #10b981;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
-        body {
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--secondary-color);
-        }
+        body { color: var(--text-dark); background: white; line-height: 1.6; }
+        a { text-decoration: none; }
+        ul { list-style: none; }
 
-        /* Navegación */
+        /* --- Navbar --- */
         header {
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .logo span {
-            color: var(--accent-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Sección Hero */
-        .hero {
-            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 86, 179, 0.9)), url('https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-            margin-top: 60px;
-        }
-
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #e68a00;
-        }
-
-        /* Secciones Generales */
-        section {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 3rem;
-        }
-
-        /* Servicios */
-        .servicios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .servicio-card {
+            padding: 15px 5%;
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: transform 0.3s;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: var(--primary-blue); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: var(--text-dark); font-weight: 600; font-size: 0.95rem; }
+        .btn-outline { border: 1px solid var(--primary-blue); color: var(--primary-blue); padding: 8px 16px; border-radius: 6px; font-weight: 600; }
+        .btn-primary { background: var(--primary-blue); color: white; padding: 10px 20px; border-radius: 6px; font-weight: 600; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: 0.3s;}
+        .btn-primary:hover { background: #003699; }
 
-        .servicio-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .servicio-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        /* Nosotros */
-        .nosotros-content {
-            display: flex;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .nosotros-text {
-            flex: 1;
-        }
-
-        /* Contacto */
-        .contacto-container {
+        /* --- Hero Section --- */
+        .hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 40px;
+            padding: 60px 5%;
+            background: var(--light-bg);
+            align-items: center;
+        }
+        .hero-text h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 15px; }
+        .hero-text p.subtitle { font-size: 1.2rem; margin-bottom: 30px; color: var(--text-muted); }
+        .trust-badges { margin-bottom: 30px; }
+        .badge { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; font-weight: 600; }
+        .badge span { color: var(--accent-green); }
+
+        /* Formulario de Captura (Derecha) */
+        .hero-form-card {
             background: white;
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
         }
-
-        .contacto-info p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .contacto-info strong {
-            color: var(--primary-color);
-        }
-
-        form {
+        .hero-form-card h3 { font-size: 1.4rem; margin-bottom: 10px; text-align: center; }
+        .hero-form-card p { text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem; }
+        .input-group {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #fdfdfd;
         }
+        .input-group input { border: none; outline: none; width: 100%; margin-left: 10px; font-size: 1rem; }
+        .hero-form-card .btn-primary { width: 100%; justify-content: center; padding: 15px; font-size: 1.1rem; margin-top: 10px; }
 
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        form .btn {
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: white;
+        /* --- Marcas / Operadoras --- */
+        .brands {
             text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
+            padding: 40px 5%;
+            border-bottom: 1px solid var(--border-color);
         }
+        .brands p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; }
+        .brand-logos { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; font-weight: bold; color: #aaa; font-size: 1.2rem; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Aquí podrías implementar un menú hamburguesa */
-            }
-            .nosotros-content {
-                flex-direction: column;
-            }
-            .contacto-container {
-                grid-template-columns: 1fr;
-            }
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
+        /* --- Info Section (Layout Mitad/Mitad) --- */
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            padding: 80px 5%;
+            align-items: center;
+        }
+        .info-content h2 { font-size: 2.2rem; margin-bottom: 20px; }
+        .info-content p { color: var(--text-muted); margin-bottom: 25px; }
+        .info-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-weight: 600; }
+        .info-list li span { color: var(--accent-green); }
+        .info-image { background: #e2e8f0; height: 400px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+
+        /* --- Cómo Funciona (3 Pasos) --- */
+        .steps-section {
+            background: var(--light-bg);
+            padding: 80px 5%;
+            text-align: center;
+        }
+        .steps-section h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .steps-section > p { color: var(--text-muted); margin-bottom: 50px; }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .step-card { text-align: left; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .step-number { background: var(--primary-blue); color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 20px; font-size: 1.2rem; }
+        .step-card h3 { margin-bottom: 15px; }
+        .step-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- Testimonios --- */
+        .testimonials { padding: 80px 5%; text-align: center; }
+        .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+        .test-card { background: var(--light-bg); padding: 30px; border-radius: 12px; text-align: left; }
+        .stars { color: #fbbf24; margin-bottom: 15px; }
+        .test-card p { font-style: italic; color: var(--text-dark); margin-bottom: 20px; }
+        .client { display: flex; align-items: center; gap: 15px; }
+        .client-avatar { width: 40px; height: 40px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .client-info strong { display: block; font-size: 0.95rem; }
+        .client-info span { font-size: 0.8rem; color: var(--accent-green); display: flex; align-items: center; gap: 3px; }
+
+        /* --- FAQ / Preguntas Frecuentes --- */
+        .faq { padding: 60px 5%; max-width: 800px; margin: 0 auto; }
+        .faq h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
+        .faq-item { border-bottom: 1px solid var(--border-color); padding: 20px 0; cursor: pointer; }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+        .faq-answer { color: var(--text-muted); margin-top: 10px; display: none; }
+        .faq-item:first-child .faq-answer { display: block; } /* Mostrar el primero por defecto */
+
+        /* --- CTA Final --- */
+        .cta-bottom { background: var(--primary-blue); color: white; text-align: center; padding: 80px 5%; }
+        .cta-bottom h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .cta-bottom p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        .cta-bottom .btn-primary { background: white; color: var(--primary-blue); margin: 0 auto; width: fit-content; padding: 15px 30px; font-size: 1.2rem; }
+
+        /* --- Footer --- */
+        footer { background: #0f172a; color: #94a3b8; padding: 60px 5% 20px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #1e293b; }
+        .footer-logo { color: white; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: bold; }
+        .footer-contact h4 { color: white; margin-bottom: 15px; }
+        .footer-bottom { text-align: center; font-size: 0.9rem; }
+
+        /* Floating WP */
+        .float-wp { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; padding: 12px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 999; }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .hero, .info-section { grid-template-columns: 1fr; }
+            .steps-grid, .test-grid { grid-template-columns: 1fr; }
+            .nav-links.desktop { display: none; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <nav>
-            <div class="logo">CV<span>Tec</span></div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
+        <div class="logo"><span class="material-symbols-outlined">devices</span> CVTec</div>
+        <nav class="nav-links desktop">
+            <a href="#">Inicio</a>
+            <a href="#">Testimonios</a>
+            <a href="#" class="btn-outline">Iniciar Sesión</a>
+            <a href="#" class="btn-primary"><span class="material-symbols-outlined">rocket_launch</span> Comenzar trámite</a>
         </nav>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Soluciones Tecnológicas en Calama</h1>
-            <p>Especialistas en servicio técnico, reparaciones y homologaciones de equipos. Calidad, rapidez y garantía en el norte de Chile.</p>
-            <a href="#contacto" class="btn">Cotizar Servicio</a>
+    <section class="hero">
+        <div class="hero-text">
+            <div style="background: #e0f2fe; color: #0284c7; padding: 5px 12px; border-radius: 20px; display: inline-block; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;">
+                +5.000 Equipos Homologados y Reparados
+            </div>
+            <h1>Homologa tu celular en Chile</h1>
+            <p class="subtitle">Sin filas, 100% Online o en nuestra sucursal de Calama.</p>
+            
+            <div class="trust-badges">
+                <div class="badge"><span class="material-symbols-outlined">verified_user</span> Proceso válido SUBTEL</div>
+                <div class="badge"><span class="material-symbols-outlined">schedule</span> Certificado en 2 horas</div>
+                <div class="badge"><span class="material-symbols-outlined">currency_exchange</span> Garantía de devolución</div>
+            </div>
+        </div>
+
+        <div class="hero-form-card">
+            <h3>Verificación Gratuita</h3>
+            <p>Ingresa tu IMEI y te diremos en segundos si debes realizar el trámite de homologación.</p>
+            <div class="input-group">
+                <span class="material-symbols-outlined" style="color:#aaa;">smartphone</span>
+                <input type="text" placeholder="Marca *#06# para obtener tu IMEI">
+            </div>
+            <div class="input-group">
+                <span class="material-symbols-outlined" style="color:#aaa;">mail</span>
+                <input type="email" placeholder="Email *">
+            </div>
+            <button class="btn-primary">Consultar IMEI</button>
         </div>
     </section>
 
-    <section id="servicios">
-        <h2 class="section-title">Nuestros Servicios</h2>
-        <div class="servicios-grid">
-            <div class="servicio-card">
-                <h3>Reparación de Equipos</h3>
-                <p>Diagnóstico y reparación de computadores, laptops y dispositivos móviles. Solucionamos problemas de hardware y software con repuestos de alta calidad.</p>
+    <section class="brands">
+        <p>Compatible con todas las operadoras</p>
+        <div class="brand-logos">
+            <span>CLARO</span>
+            <span>ENTEL</span>
+            <span>WOM</span>
+            <span>MOVISTAR</span>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="info-content">
+            <h2>¿Por qué necesitas homologar el IMEI?</h2>
+            <p>En Chile, la normativa SAE exige que todo equipo importado o comprado en el extranjero sea homologado. Sin este certificado, tu teléfono podría ser bloqueado por las compañías operadoras en 30 días.</p>
+            <ul class="info-list">
+                <li><span class="material-symbols-outlined">check_circle</span> Evita el bloqueo permanente de tu IMEI.</li>
+                <li><span class="material-symbols-outlined">check_circle</span> Válido para todas las compañías.</li>
+                <li><span class="material-symbols-outlined">check_circle</span> Trámite 100% online sin visitar sucursales.</li>
+            </ul>
+        </div>
+        <div class="info-image">
+            [ Imagen: Hombre usando celular / Equipo Técnico ]
+        </div>
+    </section>
+
+    <section class="steps-section">
+        <h2>Cómo funciona</h2>
+        <p>Tres pasos y listo. Sin papeleos, sin filas. Todo online o presencial.</p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Sin factura de compra</h3>
+                <p>Del equipo sólo necesitaremos la Marca, Modelo, IMEI y número de serie. No necesitas mayor documentación.</p>
             </div>
-            <div class="servicio-card">
-                <h3>Homologaciones</h3>
-                <p>Realizamos el proceso completo de homologación de equipos (SAE, Subtel) para garantizar que tus dispositivos cumplan con la normativa chilena vigente.</p>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Paga en línea</h3>
+                <p>Utiliza tarjeta bancaria, MercadoPago o transferencia. Tus datos están protegidos con encriptación.</p>
             </div>
-            <div class="servicio-card">
-                <h3>Mantenimiento Preventivo</h3>
-                <p>Evita fallas a futuro. Limpieza interna, cambio de pasta térmica, actualización de sistemas y optimización de rendimiento para empresas y particulares.</p>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Recibe tu certificado</h3>
+                <p>En 2 horas recibirás tu constancia digital de homologación directamente en tu correo electrónico.</p>
+            </div>
+        </div>
+        <button class="btn-primary" style="margin: 0 auto; width: fit-content; padding: 15px 30px;"><span class="material-symbols-outlined">check_circle</span> Comenzar mi homologación</button>
+    </section>
+
+    <section class="testimonials">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <p style="color: var(--text-muted);">Cientos de chilenos e importadores ya han homologado sus equipos con nosotros.</p>
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="stars">★★★★★</div>
+                <p>"Llegué a Chile, mi iPhone comprado en Miami dejó de funcionar y en menos de 2 horas desde que pagué ya tenía señal en WOM de nuevo."</p>
+                <div class="client">
+                    <div class="client-avatar">MA</div>
+                    <div class="client-info">
+                        <strong>Matías Arancibia</strong>
+                        <span><span class="material-symbols-outlined" style="font-size: 14px;">verified</span> Cliente Verificado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="stars">★★★★★</div>
+                <p>"El soporte es muy bueno. Me equivoqué digitando un número y me ayudaron por WhatsApp al instante. Excelente servicio en Calama."</p>
+                <div class="client">
+                    <div class="client-avatar">CV</div>
+                    <div class="client-info">
+                        <strong>Carolina Vergara</strong>
+                        <span><span class="material-symbols-outlined" style="font-size: 14px;">verified</span> Cliente Verificado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="stars">★★★★★</div>
+                <p>"Todo muy transparente y rápido. Mi Xiaomi global ya está registrado sin problemas para Claro y Entel. Muy recomendados."</p>
+                <div class="client">
+                    <div class="client-avatar">DP</div>
+                    <div class="client-info">
+                        <strong>Diego Pinto</strong>
+                        <span><span class="material-symbols-outlined" style="font-size: 14px;">verified</span> Cliente Verificado</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="nosotros">
-        <h2 class="section-title">Sobre CVTec</h2>
-        <div class="nosotros-content">
-            <div class="nosotros-text">
-                <p>Con sede en <strong>Calama, Región de Antofagasta</strong>, en CVTec nos dedicamos a entregar un servicio técnico de excelencia. Entendemos las exigencias de la zona y la importancia de mantener tus equipos operativos, ya sea para uso personal o para el rubro minero e industrial.</p>
-                <br>
-                <p>Nuestro equipo está altamente capacitado para resolver problemas complejos de manera eficiente, brindando transparencia en cada diagnóstico y garantizando resultados duraderos.</p>
-            </div>
+    <section class="faq">
+        <h2>Preguntas y respuestas</h2>
+        <div class="faq-item">
+            <div class="faq-question">Qué es el IMEI <span class="material-symbols-outlined">remove_circle</span></div>
+            <div class="faq-answer">El IMEI es un número único que tiene cualquier dispositivo que utiliza una tarjeta SIM.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Dónde encuentro el IMEI <span class="material-symbols-outlined">add_circle</span></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Cuánto demora el trámite <span class="material-symbols-outlined">add_circle</span></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Me quedé sin señal <span class="material-symbols-outlined">add_circle</span></div>
         </div>
     </section>
 
-    <section id="contacto">
-        <h2 class="section-title">Contáctanos</h2>
-        <div class="contacto-container">
-            <div class="contacto-info">
-                <h3>Estamos en Calama</h3>
-                <br>
-                <p><strong>Dirección:</strong> Calle Ejemplo 123, Centro, Calama</p>
-                <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
-                <p><strong>Email:</strong> contacto@cvtec.cl</p>
-                <p><strong>Horario:</strong> Lunes a Viernes: 09:00 - 18:30 hrs.</p>
-            </div>
-            <div class="contacto-formulario">
-                <form action="#" method="POST">
-                    <input type="text" placeholder="Tu Nombre" required>
-                    <input type="email" placeholder="Tu Correo" required>
-                    <input type="text" placeholder="Asunto (Ej. Cotización Homologación)" required>
-                    <textarea rows="5" placeholder="Cuéntanos tu problema..." required></textarea>
-                    <button type="submit" class="btn">Enviar Mensaje</button>
-                </form>
-            </div>
-        </div>
+    <section class="cta-bottom">
+        <h2>LISTO PARA EMPEZAR</h2>
+        <p>Únete a los miles de usuarios que ya confían en nosotros.<br>No arriesgues el bloqueo de tu equipo.</p>
+        <button class="btn-primary"><span class="material-symbols-outlined">rocket_launch</span> Comenzar mi homologación</button>
     </section>
 
     <footer>
-        <p>&copy; 2026 CVTec. Todos los derechos reservados. | Servicio Técnico Calama</p>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><span class="material-symbols-outlined">devices</span> CVTec</div>
+                <p>Tu aliado en homologaciones y servicio técnico en la Región de Antofagasta.</p>
+            </div>
+            <div class="footer-contact">
+                <h4>¿Dudas? Contáctanos</h4>
+                <p>Whatsapp: +56 9 1234 5678</p>
+                <p>Horario: Lunes a Sábado 10:00 a 19:30 hrs.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            www.cvtec.cl | Todos los derechos reservados © 2026
+        </div>
     </footer>
+
+    <a href="#" class="float-wp">
+        ¿Necesitas ayuda?
+    </a>
 
 </body>
 </html>
