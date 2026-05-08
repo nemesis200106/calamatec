@@ -3,270 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melamina Pro Engine - Visualizador 2D</title>
+    <title>CVTec | Servicio Técnico y Homologaciones en Calama</title>
     <style>
+        /* Estilos Generales */
         :root {
-            --bg: #0f172a; --card: #1e293b; --primary: #10b981; --text: #f8fafc; --border: #334155;
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #ff9800;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 400px 1fr; gap: 20px; }
-        .panel { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
-        h1, h2 { color: var(--primary); margin-top: 0; }
-        
-        /* Configuración de Plancha */
-        .sheet-config { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--primary); }
-        .input-group { margin-bottom: 10px; }
-        label { display: block; font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px; }
-        input, select { width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: white; border-radius: 6px; }
 
-        /* Lista de Muebles */
-        .catalog-list { max-height: 400px; overflow-y: auto; margin-top: 15px; }
-        .catalog-list::-webkit-scrollbar { width: 8px; }
-        .catalog-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        .mueble-item { padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .mueble-item:hover { background: rgba(16, 185, 129, 0.1); }
-        .mueble-item.active { border-left: 4px solid var(--primary); background: rgba(16, 185, 129, 0.2); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        /* Visualizador 2D */
-        .canvas-container { text-align: center; background: #000; border-radius: 8px; padding: 20px; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        canvas { background: #222; border: 2px solid #444; max-width: 100%; height: auto; }
-        .stats { display: flex; justify-content: space-around; margin-top: 20px; width: 100%; }
-        .stat-box { text-align: center; padding: 10px; background: var(--bg); border-radius: 8px; border: 1px solid var(--border); flex: 1; margin: 0 10px; }
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        /* Navegación */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Sección Hero */
+        .hero {
+            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 86, 179, 0.9)), url('https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #e68a00;
+        }
+
+        /* Secciones Generales */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+        }
+
+        /* Servicios */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .servicio-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .servicio-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Nosotros */
+        .nosotros-content {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .nosotros-text {
+            flex: 1;
+        }
+
+        /* Contacto */
+        .contacto-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .contacto-info p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contacto-info strong {
+            color: var(--primary-color);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        form .btn {
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Aquí podrías implementar un menú hamburguesa */
+            }
+            .nosotros-content {
+                flex-direction: column;
+            }
+            .contacto-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header style="text-align:center; margin-bottom:30px;">
-        <h1>Melamina Pro Engine</h1>
-        <p>Sincronización con Google Sheets & Visualización Técnica 2D</p>
+    <header>
+        <nav>
+            <div class="logo">CV<span>Tec</span></div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="container">
-        <aside class="panel">
-            <div class="sheet-config">
-                <h3 style="font-size: 0.9rem; margin-bottom: 10px; color: var(--primary);">CONFIGURACIÓN DE PLANCHA</h3>
-                <div class="input-group">
-                    <label>Ancho Plancha (mm)</label>
-                    <input type="number" id="p_ancho" value="2440" onchange="dibujarCortes()">
-                </div>
-                <div class="input-group">
-                    <label>Largo Plancha (mm)</label>
-                    <input type="number" id="p_largo" value="1830" onchange="dibujarCortes()">
-                </div>
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Soluciones Tecnológicas en Calama</h1>
+            <p>Especialistas en servicio técnico, reparaciones y homologaciones de equipos. Calidad, rapidez y garantía en el norte de Chile.</p>
+            <a href="#contacto" class="btn">Cotizar Servicio</a>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="servicios-grid">
+            <div class="servicio-card">
+                <h3>Reparación de Equipos</h3>
+                <p>Diagnóstico y reparación de computadores, laptops y dispositivos móviles. Solucionamos problemas de hardware y software con repuestos de alta calidad.</p>
             </div>
-
-            <h2>Catálogo Externo</h2>
-            <div id="status-sheet" style="font-size: 0.8rem; color: #f59e0b;">⏳ Conectando con Google Sheets...</div>
-            <div class="catalog-list" id="lista_muebles">
-                </div>
-        </aside>
-
-        <main class="panel">
-            <h2>Esquema Técnico de Despiece (2D)</h2>
-            <div class="canvas-container">
-                <canvas id="canvas_2d" width="800" height="600"></canvas>
-                
-                <div class="stats">
-                    <div class="stat-box">
-                        <label>Mueble Actual</label>
-                        <div id="mueble_nombre" style="font-weight:bold; color:var(--text);">Ninguno</div>
-                    </div>
-                    <div class="stat-box">
-                        <label>Ocupación Estimada</label>
-                        <div id="eficiencia" style="font-weight:bold; color:var(--primary);">0%</div>
-                    </div>
-                    <div class="stat-box">
-                        <label>Piezas Mayores</label>
-                        <div id="total_piezas" style="font-weight:bold; color:var(--text);">0</div>
-                    </div>
-                </div>
+            <div class="servicio-card">
+                <h3>Homologaciones</h3>
+                <p>Realizamos el proceso completo de homologación de equipos (SAE, Subtel) para garantizar que tus dispositivos cumplan con la normativa chilena vigente.</p>
             </div>
-
-            <div style="margin-top:20px;">
-                <table style="width:100%; border-collapse: collapse; font-size: 0.85rem;">
-                    <thead><tr style="text-align:left; color:#94a3b8; border-bottom:1px solid var(--border);"><th>PIEZA</th><th>CANTIDAD</th><th>MEDIDA DE CORTE (mm)</th></tr></thead>
-                    <tbody id="detalles_corte"></tbody>
-                </table>
+            <div class="servicio-card">
+                <h3>Mantenimiento Preventivo</h3>
+                <p>Evita fallas a futuro. Limpieza interna, cambio de pasta térmica, actualización de sistemas y optimización de rendimiento para empresas y particulares.</p>
             </div>
-        </main>
-    </div>
+        </div>
+    </section>
 
-    <script>
-        // =====================================================================
-        // ENLACE CSV INTEGRADO AUTOMÁTICAMENTE:
-        const URL_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLzyFrSoKL9fpEDOaL6qHanGggJGgDuuPqVlDVZS3rpaA1TTAaCLODxK6UMT25Ydr0Z7X7VL13I602/pub?output=csv";
-        // =====================================================================
+    <section id="nosotros">
+        <h2 class="section-title">Sobre CVTec</h2>
+        <div class="nosotros-content">
+            <div class="nosotros-text">
+                <p>Con sede en <strong>Calama, Región de Antofagasta</strong>, en CVTec nos dedicamos a entregar un servicio técnico de excelencia. Entendemos las exigencias de la zona y la importancia de mantener tus equipos operativos, ya sea para uso personal o para el rubro minero e industrial.</p>
+                <br>
+                <p>Nuestro equipo está altamente capacitado para resolver problemas complejos de manera eficiente, brindando transparencia en cada diagnóstico y garantizando resultados duraderos.</p>
+            </div>
+        </div>
+    </section>
 
-        let mueblesData = [];
-        let muebleSeleccionado = null;
+    <section id="contacto">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contacto-container">
+            <div class="contacto-info">
+                <h3>Estamos en Calama</h3>
+                <br>
+                <p><strong>Dirección:</strong> Calle Ejemplo 123, Centro, Calama</p>
+                <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+                <p><strong>Email:</strong> contacto@cvtec.cl</p>
+                <p><strong>Horario:</strong> Lunes a Viernes: 09:00 - 18:30 hrs.</p>
+            </div>
+            <div class="contacto-formulario">
+                <form action="#" method="POST">
+                    <input type="text" placeholder="Tu Nombre" required>
+                    <input type="email" placeholder="Tu Correo" required>
+                    <input type="text" placeholder="Asunto (Ej. Cotización Homologación)" required>
+                    <textarea rows="5" placeholder="Cuéntanos tu problema..." required></textarea>
+                    <button type="submit" class="btn">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-        async function cargarDatos() {
-            if (URL_SHEET === "PEGAR_AQUÍ_EL_LINK_CSV_DE_GOOGLE_SHEETS" || URL_SHEET === "") {
-                document.getElementById('status-sheet').innerHTML = "⚠️ <b>Falta el enlace:</b> Abre el archivo HTML con Bloc de Notas, pega tu enlace en la línea 90 y guarda los cambios.";
-                document.getElementById('status-sheet').style.color = "#f43f5e";
-                return;
-            }
+    <footer>
+        <p>&copy; 2026 CVTec. Todos los derechos reservados. | Servicio Técnico Calama</p>
+    </footer>
 
-            try {
-                const response = await fetch(URL_SHEET);
-                const data = await response.text();
-                
-                // Procesar CSV a objeto JSON
-                const filas = data.split("\\n").filter(f => f.trim() !== "").slice(1); // Omitir encabezado y líneas vacías
-                
-                mueblesData = filas.map(f => {
-                    // Manejar posible retorno de carro al final de la línea (\r)
-                    const lineaLimpia = f.replace('\\r', '');
-                    const c = lineaLimpia.split(",");
-                    if(c.length >= 7) {
-                        return { 
-                            id: c[0].trim(), 
-                            nombre: c[1].trim(), 
-                            cat: c[2].trim(), 
-                            H: parseFloat(c[3]), 
-                            W: parseFloat(c[4]), 
-                            D: parseFloat(c[5]), 
-                            E: parseFloat(c[6]) 
-                        };
-                    }
-                    return null;
-                }).filter(m => m !== null);
-
-                document.getElementById('status-sheet').innerText = "✅ Sincronizado con Google Sheets (" + mueblesData.length + " modelos)";
-                document.getElementById('status-sheet').style.color = "var(--primary)";
-                renderizarLista();
-            } catch (e) {
-                document.getElementById('status-sheet').innerText = "⚠️ Error de conexión. Verifica que el enlace está correcto y tienes internet.";
-                document.getElementById('status-sheet').style.color = "#f43f5e";
-                console.error("Error al cargar Google Sheets:", e);
-            }
-        }
-
-        function renderizarLista() {
-            const list = document.getElementById('lista_muebles');
-            list.innerHTML = mueblesData.map(m => `
-                <div class="mueble-item" id="item_${m.id}" onclick="seleccionarMueble('${m.id}')">
-                    <strong style="color:var(--text);">${m.nombre}</strong><br>
-                    <span style="font-size:0.75rem; color:#94a3b8;">Categoría: ${m.cat} | Medidas: ${m.H} x ${m.W} x ${m.D}</span>
-                </div>
-            `).join('');
-
-            // Seleccionar el primero por defecto
-            if(mueblesData.length > 0) seleccionarMueble(mueblesData[0].id);
-        }
-
-        function seleccionarMueble(id) {
-            muebleSeleccionado = mueblesData.find(m => m.id === id);
-            
-            // Efecto visual de selección
-            document.querySelectorAll('.mueble-item').forEach(el => el.classList.remove('active'));
-            const elemento = document.getElementById('item_' + id);
-            if (elemento) elemento.classList.add('active');
-            
-            document.getElementById('mueble_nombre').innerText = muebleSeleccionado.nombre;
-            dibujarCortes();
-        }
-
-        function dibujarCortes() {
-            if (!muebleSeleccionado) return;
-
-            const canvas = document.getElementById('canvas_2d');
-            const ctx = canvas.getContext('2d');
-            
-            // Asegurar que las medidas del canvas se adaptan
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width - 40;
-            
-            const pW = parseFloat(document.getElementById('p_ancho').value);
-            const pL = parseFloat(document.getElementById('p_largo').value);
-            const E = muebleSeleccionado.E;
-
-            // Escala para ajustar la plancha dentro del canvas
-            const scale = Math.min(canvas.width / pW, canvas.height / pL) * 0.85;
-            const offsetX = (canvas.width - pW * scale) / 2;
-            const offsetY = (canvas.height - pL * scale) / 2;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // 1. Dibujar el fondo de la Hoja de Melamina
-            ctx.fillStyle = "#1e293b";
-            ctx.fillRect(offsetX, offsetY, pW * scale, pL * scale);
-            ctx.strokeStyle = "#10b981"; // Borde verde neón
-            ctx.lineWidth = 2;
-            ctx.strokeRect(offsetX, offsetY, pW * scale, pL * scale);
-            
-            // Texto de formato de plancha
-            ctx.fillStyle = "#94a3b8";
-            ctx.font = "12px Arial";
-            ctx.fillText(`Formato Plancha: ${pW}mm x ${pL}mm`, offsetX, offsetY - 10);
-
-            // 2. Generar el Despiece Básico Estructural
-            const piezas = [
-                { n: "Lateral Izquierdo", w: muebleSeleccionado.H, l: muebleSeleccionado.D },
-                { n: "Lateral Derecho", w: muebleSeleccionado.H, l: muebleSeleccionado.D },
-                { n: "Base Inferior", w: muebleSeleccionado.W - (2*E), l: muebleSeleccionado.D },
-                { n: "Techo / Cubierta", w: muebleSeleccionado.W - (2*E), l: muebleSeleccionado.D }
-            ];
-
-            let posX = offsetX + 10;
-            let posY = offsetY + 10;
-            let tableHTML = '';
-            let areaCortes = 0;
-            let alturaMaximaFila = 0;
-
-            // 3. Dibujar las piezas sobre la plancha
-            piezas.forEach((p) => {
-                const drawW = p.w * scale;
-                const drawL = p.l * scale;
-
-                // Salto de línea si la pieza se sale del ancho de la plancha
-                if (posX + drawW > offsetX + (pW * scale) - 10) { 
-                    posX = offsetX + 10; 
-                    posY += alturaMaximaFila + 15; 
-                    alturaMaximaFila = 0; 
-                }
-
-                // Dibujar el rectángulo de corte
-                ctx.fillStyle = "rgba(16, 185, 129, 0.4)";
-                ctx.fillRect(posX, posY, drawW, drawL);
-                ctx.strokeStyle = "#ffffff";
-                ctx.lineWidth = 1.5;
-                ctx.strokeRect(posX, posY, drawW, drawL);
-                
-                // Etiqueta de la pieza (Si cabe)
-                if (drawW > 50 && drawL > 20) {
-                    ctx.fillStyle = "white";
-                    ctx.font = "11px Arial";
-                    ctx.fillText(p.n, posX + 5, posY + 15);
-                }
-
-                // Registrar en la tabla y sumar área
-                areaCortes += (p.w * p.l);
-                tableHTML += `<tr style="border-bottom:1px solid #334155;">
-                                <td style="color:#f8fafc; font-weight:600;">${p.n}</td>
-                                <td style="text-align:center;">1</td>
-                                <td style="font-family: monospace; color:#10b981;">${p.w} x ${p.l}</td>
-                              </tr>`;
-                
-                posX += drawW + 15; // Espacio que simula el grosor del disco de sierra (aprox)
-                if (drawL > alturaMaximaFila) alturaMaximaFila = drawL;
-            });
-
-            // 4. Actualizar las estadísticas de la interfaz
-            document.getElementById('detalles_corte').innerHTML = tableHTML;
-            document.getElementById('total_piezas').innerText = piezas.length;
-            
-            const eficienciaPorcentaje = ((areaCortes / (pW * pL)) * 100).toFixed(1);
-            document.getElementById('eficiencia').innerText = eficienciaPorcentaje + "%";
-            
-            if (eficienciaPorcentaje > 80) {
-                document.getElementById('eficiencia').style.color = "#ef4444"; // Rojo si está muy llena
-            } else {
-                document.getElementById('eficiencia').style.color = "#10b981"; // Verde normal
-            }
-        }
-
-        window.onload = cargarDatos;
-    </script>
 </body>
 </html>
