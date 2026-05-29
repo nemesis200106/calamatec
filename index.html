@@ -3,184 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVTec | Homologación y Servicio Técnico</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Inventario Fiestas Patrias - FULL CELL CALAMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     
     <style>
-        /* (Mismo CSS de la versión anterior) */
-        :root { --primary-blue: #0046c0; --light-bg: #f8fafc; --text-dark: #1e293b; --text-muted: #64748b; --accent-green: #10b981; --border-color: #e2e8f0; --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { color: var(--text-dark); background: white; line-height: 1.6; }
-        a { text-decoration: none; }
-        ul { list-style: none; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: var(--primary-blue); }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-dark); font-weight: 600; font-size: 0.95rem; }
-        .btn-outline { border: 1px solid var(--primary-blue); color: var(--primary-blue); padding: 8px 16px; border-radius: 6px; font-weight: 600; }
-        .btn-primary { background: var(--primary-blue); color: white; padding: 10px 20px; border-radius: 6px; font-weight: 600; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: 0.3s;}
-        .btn-primary:hover { background: #003699; }
-        .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
-        .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px 5%; background: var(--light-bg); align-items: center; }
-        .hero-text h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 15px; }
-        .hero-text p.subtitle { font-size: 1.2rem; margin-bottom: 30px; color: var(--text-muted); }
-        .trust-badges { margin-bottom: 30px; }
-        .badge { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; font-weight: 600; }
-        .badge span { color: var(--accent-green); }
-        .hero-form-card { background: white; padding: 30px; border-radius: 16px; box-shadow: var(--card-shadow); }
-        .hero-form-card h3 { font-size: 1.4rem; margin-bottom: 10px; text-align: center; }
-        .hero-form-card p { text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem; }
-        .input-group { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 15px; background: #fdfdfd; transition: border-color 0.3s;}
-        .input-group.error { border-color: #ef4444; }
-        .input-group input { border: none; outline: none; width: 100%; margin-left: 10px; font-size: 1rem; background: transparent; }
-        .hero-form-card .btn-primary { width: 100%; justify-content: center; padding: 15px; font-size: 1.1rem; margin-top: 10px; }
+        :root { 
+            /* --- COLORES FIESTAS PATRIAS 🇨🇱 --- */
+            --chile-azul: #0033a0; /* Azul bandera */
+            --chile-rojo: #da291c; /* Rojo bandera */
+            --fondo: #f8fafc;
+            --borde: #e2e8f0;
+        }
+        body { background-color: var(--fondo); font-family: 'Inter', system-ui, sans-serif; color: #334155; margin: 0; padding: 0;}
         
-        /* Mensajes de Alerta */
-        .alert { display: none; padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.9rem; text-align: center; font-weight: 600; }
-        .alert.error { display: block; background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
-        .alert.success { display: block; background: #d1fae5; color: #047857; border: 1px solid #34d399; }
+        /* Encabezado Principal Dieciochero */
+        .header-app { 
+            background: white; 
+            padding: 1.8rem 0; 
+            border-bottom: 4px solid var(--chile-rojo); /* Línea roja inferior tipo bandera */
+            border-top: 4px solid var(--chile-azul);    /* Línea azul superior */
+        }
+        .brand-title { font-weight: 900; letter-spacing: -1px; color: var(--chile-azul); font-size: 2.2rem; text-align: center; margin-bottom: 0;}
+        .subtitle { font-size: 0.8rem; text-align: center; color: var(--chile-rojo); font-weight: 800; letter-spacing: 1.5px; margin-top: 4px;}
         
-        .brands { text-align: center; padding: 40px 5%; border-bottom: 1px solid var(--border-color); }
-        .brands p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; }
-        .brand-logos { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; font-weight: bold; color: #aaa; font-size: 1.2rem; }
-        
-        /* Responsive básico */
-        @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .nav-links.desktop { display: none; } }
+        /* Barra de Búsqueda Flotante */
+        .sticky-search-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(218, 41, 28, 0.2); /* Sombra roja sutil */
+            box-shadow: 0 4px 10px -2px rgba(0, 51, 160, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-container { max-width: 900px; margin: 0 auto; padding: 0 15px; }
+        .search-bar { 
+            border-radius: 10px; 
+            border: 2px solid var(--chile-azul); 
+            padding: 12px 20px; 
+            font-size: 1rem; 
+            width: 100%;
+            transition: 0.2s;
+            background: white;
+        }
+        .search-bar:focus { border-color: var(--chile-rojo); box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.15); outline: none; }
+
+        /* Cabecera de listado (Solo PC) */
+        .list-header { 
+            display: flex; 
+            padding: 8px 20px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            color: var(--chile-azul); 
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--chile-azul);
+            margin-bottom: 10px;
+        }
+        .list-icon { font-size: 1rem; margin-right: 4px; }
+
+        /* Fila de producto */
+        .item-row { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 15px 20px; 
+            margin-bottom: 8px; 
+            border: 1px solid var(--borde);
+            border-left: 4px solid var(--chile-azul); /* Detalle azul en cada tarjeta */
+            display: flex;
+            align-items: center;
+            transition: 0.15s;
+        }
+        .item-row:hover { border-color: var(--chile-azul); box-shadow: 0 4px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+        /* Estados de Stock */
+        .no-stock { background-color: #fff1f2 !important; border-color: #fecdd3 !important; border-left-color: var(--chile-rojo) !important; opacity: 0.9;}
+        .badge-agotado { background: var(--chile-rojo); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+        .badge-stock { background: #eff6ff; color: var(--chile-azul); padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; border: 1px solid #bfdbfe; }
+
+        /* Sistema de Columnas Base (PC) */
+        .col-main { flex: 2.5; }
+        .col-desc { flex: 4; padding: 0 15px; } 
+        .col-footer { flex: 3; display: flex; align-items: center; } 
+        .col-stock { flex: 1; text-align: center; }
+        .col-price { flex: 1; text-align: right; }
+
+        /* Tipografía */
+        .badge-brand { 
+            background: #f1f5f9; color: #334155; 
+            font-size: 0.65rem; font-weight: 800; 
+            padding: 2px 6px; border-radius: 4px; 
+            text-transform: uppercase; margin-right: 5px;
+        }
+        .product-sku { font-size: 0.65rem; color: #64748b; font-family: monospace; font-weight: 600;}
+        .item-name { font-weight: 800; font-size: 1.05rem; color: #0f172a; display: block; line-height: 1.2; margin-top: 4px; }
+        .item-desc { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.3; }
+        .price-text { font-size: 1.3rem; font-weight: 900; color: var(--chile-rojo); } /* Precios en rojo para destacar */
+
+        .status-msg { text-align: center; padding: 30px; font-size: 1rem; color: #64748b; font-weight: 600;}
+
+        /* --- OPTIMIZACIÓN PARA MÓVILES --- */
+        @media (max-width: 992px) {
+            .header-app { padding: 1.2rem 0; }
+            .brand-title { font-size: 1.8rem; }
+            .sticky-search-wrapper { padding: 10px 0; margin-bottom: 15px; }
+            .search-bar { padding: 10px 15px; font-size: 0.95rem; }
+            
+            .list-header { display: none; }
+            
+            .item-row { flex-direction: column; align-items: flex-start; padding: 12px 15px; gap: 6px; }
+            .col-main { width: 100%; }
+            .col-desc { width: 100%; padding: 0; }
+            .item-name { font-size: 1rem; } 
+            .item-desc { font-size: 0.8rem; }
+            
+            .col-footer { 
+                width: 100%; 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                border-top: 1px dashed var(--borde); 
+                padding-top: 8px; 
+                margin-top: 4px; 
+            }
+            .col-stock, .col-price { text-align: left; }
+            .col-price { text-align: right; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><span class="material-symbols-outlined">devices</span> CVTec</div>
-        <nav class="nav-links desktop">
-            <a href="#">Inicio</a>
-            <a href="#">Testimonios</a>
-            <a href="#" class="btn-outline">Iniciar Sesión</a>
-            <a href="#" class="btn-primary"><span class="material-symbols-outlined">rocket_launch</span> Comenzar trámite</a>
-        </nav>
-    </header>
+<header class="header-app">
+    <div class="container">
+        <h1 class="brand-title">🇨🇱 FULL CELL CALAMA 🇨🇱</h1>
+        <p class="subtitle mb-0">SISTEMA DE INVENTARIO - EDICIÓN FIESTAS PATRIAS 🥟🪁</p>
+    </div>
+</header>
 
-    <section class="hero">
-        <div class="hero-text">
-            <div style="background: #e0f2fe; color: #0284c7; padding: 5px 12px; border-radius: 20px; display: inline-block; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;">
-                +5.000 Equipos Homologados
-            </div>
-            <h1>Homologa tu celular en Chile</h1>
-            <p class="subtitle">Sin filas, 100% Online o en nuestra sucursal de Calama.</p>
-            
-            <div class="trust-badges">
-                <div class="badge"><span class="material-symbols-outlined">verified_user</span> Proceso válido SUBTEL</div>
-                <div class="badge"><span class="material-symbols-outlined">schedule</span> Certificado en 2 horas</div>
-                <div class="badge"><span class="material-symbols-outlined">currency_exchange</span> Garantía de devolución</div>
-            </div>
+<div class="sticky-search-wrapper">
+    <div class="container search-container">
+        <input type="text" id="searchInput" class="form-control search-bar shadow-sm" placeholder="🔍 Buscar código o repuesto (¡Viva Chile!)..." autocomplete="off">
+    </div>
+</div>
+
+<main class="container mb-5" style="max-width: 1000px;">
+    <div class="list-header d-none d-lg-flex">
+        <div class="col-main"><span class="list-icon">⭐</span> Modelo / Referencia</div>
+        <div class="col-desc"><span class="list-icon">🪁</span> Detalle Técnico</div>
+        <div class="col-footer">
+            <div class="col-stock"><span class="list-icon">📦</span> Disponibilidad</div>
+            <div class="col-price"><span class="list-icon">🇨🇱</span> Precio Neto</div>
         </div>
+    </div>
 
-        <div class="hero-form-card">
-            <h3>Verificación Gratuita</h3>
-            <p>Ingresa tu IMEI y te diremos si necesitas homologar.</p>
-            
-            <form id="imeiForm" action="https://formspree.io/f/xnjwbwqg" method="POST">
-                <div class="input-group" id="imeiGroup">
-                    <span class="material-symbols-outlined" style="color:#aaa;">smartphone</span>
-                    <input type="text" id="imeiInput" name="IMEI" placeholder="IMEI de 15 dígitos" maxlength="15" autocomplete="off">
-                </div>
-                <div class="input-group" id="emailGroup">
-                    <span class="material-symbols-outlined" style="color:#aaa;">mail</span>
-                    <input type="email" id="emailInput" name="Correo" placeholder="Email *">
-                </div>
+    <div id="inventoryList">
+        <div class="status-msg">⏳ Preparando la parrilla de datos...</div>
+    </div>
+</main>
+
+<script>
+    // Tu enlace intacto
+    const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSs_mhwS-Op3r7iDRB3UZutQc8m5_oe5uDUqHzwbLOmHcsOm6uPtm_nYVQgwb9t1tjIWZ2waAnRlTJA/pub?output=csv'; 
+
+    let inventory = [];
+
+    function loadInventory() {
+        Papa.parse(SHEET_CSV, {
+            download: true,
+            header: false,
+            skipEmptyLines: true,
+            complete: function(results) {
+                const filas = results.data.slice(1);
                 
-                <div id="alertMessage" class="alert"></div>
-                
-                <button type="submit" id="submitBtn" class="btn-primary">Consultar IMEI</button>
-            </form>
-        </div>
-    </section>
+                inventory = filas.map(c => {
+                    return {
+                        codigo: c[0] ? c[0].trim() : 'S/N',
+                        nombre: c[1] ? c[1].trim() : 'Producto sin nombre',
+                        precio: c[2] ? c[2].trim() : '$0',
+                        desc: c[3] ? c[3].trim() : '-',
+                        marca: c[4] ? c[4].trim() : '',
+                        stock: parseInt(c[5]) || 0
+                    };
+                }).filter(item => item.nombre !== 'Producto sin nombre' && item.nombre !== '');
 
-    <section class="brands">
-        <p>Compatible con todas las operadoras</p>
-        <div class="brand-logos">
-            <span>CLARO</span><span>ENTEL</span><span>WOM</span><span>MOVISTAR</span>
-        </div>
-    </section>
-
-    <script>
-        document.getElementById('imeiForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Detiene el envío del formulario para validar primero
-            
-            const imei = document.getElementById('imeiInput').value.trim();
-            const email = document.getElementById('emailInput').value.trim();
-            const alertBox = document.getElementById('alertMessage');
-            const btn = document.getElementById('submitBtn');
-            const imeiGroup = document.getElementById('imeiGroup');
-            
-            // Limpiar alertas previas
-            alertBox.className = 'alert';
-            alertBox.textContent = '';
-            imeiGroup.classList.remove('error');
-
-            // 1. Validar que el IMEI tenga 15 dígitos numéricos
-            if (!/^[0-9]{15}$/.test(imei)) {
-                mostrarError('El IMEI debe contener exactamente 15 números.');
-                imeiGroup.classList.add('error');
-                return;
+                render(inventory);
+            },
+            error: function(error) {
+                document.getElementById('inventoryList').innerHTML = `<div class="status-msg" style="color: var(--chile-rojo);">❌ Pucha, hubo un error leyendo el archivo.</div>`;
             }
-
-            // 2. Validar IMEI usando el Algoritmo de Luhn (Validación Real)
-            if (!validarLuhn(imei)) {
-                mostrarError('IMEI inválido. Por favor revisa los números e intenta de nuevo.');
-                imeiGroup.classList.add('error');
-                return;
-            }
-
-            // 3. Validar Email
-            if (!email || !email.includes('@')) {
-                mostrarError('Ingresa un correo electrónico válido.');
-                return;
-            }
-
-            // 4. Si todo es correcto, simulamos carga
-            btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined">sync</span> Consultando base de datos...';
-
-            // Simulación de respuesta de servidor (Espera 2 segundos)
-            setTimeout(() => {
-                alertBox.textContent = '¡Equipo válido para homologar! Te contactaremos al correo.';
-                alertBox.className = 'alert success';
-                btn.innerHTML = '<span class="material-symbols-outlined">check</span> Solicitud Enviada';
-                
-                // AQUÍ SE ENVÍA REALMENTE EL FORMULARIO a tu correo
-                // Descomenta la siguiente línea cuando pongas tu URL de Formspree
-                 this.submit(); 
-                
-            }, 2000);
         });
+    }
 
-        // Función para mostrar errores en pantalla
-        function mostrarError(mensaje) {
-            const alertBox = document.getElementById('alertMessage');
-            alertBox.textContent = mensaje;
-            alertBox.className = 'alert error';
+    function render(list) {
+        const container = document.getElementById('inventoryList');
+        if (list.length === 0) {
+            container.innerHTML = `<div class="status-msg">No se encontraron artículos con esa búsqueda.</div>`;
+            return;
         }
 
-        // Algoritmo de Luhn: Fórmula matemática real para validar IMEIs internacionales
-        function validarLuhn(imei) {
-            let sum = 0;
-            for (let i = 0; i < 15; i++) {
-                let digit = parseInt(imei.charAt(i), 10);
-                if (i % 2 !== 0) {
-                    digit *= 2;
-                    if (digit > 9) digit -= 9;
-                }
-                sum += digit;
-            }
-            return sum % 10 === 0;
-        }
+        container.innerHTML = list.map(item => {
+            const hasStock = item.stock > 0;
+            return `
+                <div class="item-row ${!hasStock ? 'no-stock' : ''}">
+                    
+                    <div class="col-main">
+                        <div style="display: flex; align-items: center; margin-bottom: 2px;">
+                            ${item.marca ? `<span class="badge-brand">${item.marca}</span>` : ''}
+                            <span class="product-sku">REF: ${item.codigo}</span>
+                        </div>
+                        <span class="item-name">${item.nombre}</span>
+                    </div>
 
-        // Permitir solo números en el campo IMEI
-        document.getElementById('imeiInput').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    </script>
+                    <div class="col-desc">
+                        <p class="item-desc">${item.desc}</p>
+                    </div>
+
+                    <div class="col-footer">
+                        <div class="col-stock">
+                            <span class="${hasStock ? 'badge-stock' : 'badge-agotado'}">
+                                ${hasStock ? item.stock + ' UNID' : 'AGOTADO'}
+                            </span>
+                        </div>
+                        <div class="col-price">
+                            <span class="price-text">${item.precio}</span>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+        }).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        const filtered = inventory.filter(i => 
+            i.nombre.toLowerCase().includes(term) || 
+            i.codigo.toLowerCase().includes(term) ||
+            i.desc.toLowerCase().includes(term) ||
+            i.marca.toLowerCase().includes(term)
+        );
+        render(filtered);
+    });
+
+    loadInventory();
+</script>
+
 </body>
 </html>
