@@ -3,197 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Corporativo - FULL CELL</title>
+    <title>Inventario - FULL CELL CALAMA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     
     <style>
         :root { 
-            /* Paleta Apple-Pro */
-            --bg-base: #f5f5f7;
-            --bg-surface: #ffffff;
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --text-tertiary: #a1a1a6;
-            --border-light: rgba(0, 0, 0, 0.05);
-            --search-bg: #e8e8ed;
-            --accent-blue: #0071e3;
+            /* Paleta: Fondos Pasteles Relajantes + Detalles Llamativos */
+            --bg-pastel: #f3f5f9; /* Azul grisáceo muy suave */
+            --card-pastel: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            
+            /* Colores de Estado (Pastel de fondo, Vibrante en texto) */
+            --green-pastel: #d1fae5; --green-vibrant: #059669;
+            --red-pastel: #ffe4e6; --red-vibrant: #e11d48;
+            --orange-pastel: #ffedd5; --orange-vibrant: #ea580c;
+            --blue-pastel: #e0e7ff; --blue-vibrant: #4f46e5;
+            --pink-pastel: #fce7f3; --pink-vibrant: #db2777;
         }
         
         body { 
-            background-color: var(--bg-base); 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; 
-            color: var(--text-primary); 
+            background: linear-gradient(135deg, var(--bg-pastel) 0%, #fdfbfb 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            color: var(--text-dark); 
             margin: 0; 
             padding: 0;
-            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
         
-        /* --- ENCABEZADO EMPRESARIAL --- */
-        .header-pro { 
-            padding: 3.5rem 0 2rem 0; 
+        /* --- ENCABEZADO SUAVE --- */
+        .header-relax { 
+            padding: 3rem 0 1.5rem 0; 
             text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .header-title { 
-            font-weight: 800; 
-            letter-spacing: -0.04em; 
-            color: var(--text-primary); 
-            font-size: 2.8rem; 
-            margin-bottom: 5px;
-            line-height: 1;
+            font-weight: 900; 
+            letter-spacing: -1px; 
+            color: var(--blue-vibrant); 
+            font-size: 2.5rem; 
+            margin-bottom: 8px;
         }
         .header-address { 
-            font-size: 0.85rem; 
-            color: var(--text-secondary); 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
             font-weight: 600; 
-            letter-spacing: 0.05em; 
             display: flex;
             align-items: center;
-            gap: 8px;
             justify-content: center;
-            margin-bottom: 15px;
+            gap: 12px;
         }
 
-        /* --- MARCADOR DE ESTADO DEL LOCAL (Controlado por Sheet) --- */
+        /* --- MARCADOR DE LOCAL ABIERTO/CERRADO --- */
         .store-badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             text-transform: uppercase;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
-        .store-open { background: #e5f8eb; color: #147a32; }
-        .store-open::before { content: ''; width: 6px; height: 6px; background: #34c759; border-radius: 50%; box-shadow: 0 0 4px #34c759; }
-        .store-closed { background: #fff1f2; color: #e11d48; }
-        .store-closed::before { content: ''; width: 6px; height: 6px; background: #e11d48; border-radius: 50%; }
+        .store-open { background: var(--green-pastel); color: var(--green-vibrant); }
+        .store-open::before { content: ''; width: 8px; height: 8px; background: var(--green-vibrant); border-radius: 50%; box-shadow: 0 0 6px var(--green-vibrant); }
+        .store-closed { background: var(--red-pastel); color: var(--red-vibrant); }
+        .store-closed::before { content: ''; width: 8px; height: 8px; background: var(--red-vibrant); border-radius: 50%; }
         
-        /* --- BARRA DE BÚSQUEDA TIPO SPOTLIGHT --- */
+        /* --- BÚSQUEDA RELAJANTE --- */
         .sticky-search {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(245, 245, 247, 0.85);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            background: rgba(243, 245, 249, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 15px 0;
-            border-bottom: 1px solid var(--border-light);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .search-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
         .search-input { 
-            border-radius: 14px; 
-            border: none;
-            background-color: var(--search-bg);
-            padding: 14px 20px 14px 45px; 
+            border-radius: 20px; 
+            border: 2px solid #e2e8f0;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px; 
             font-size: 1.05rem; 
             width: 100%;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2386868b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: 16px center;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            text-align: center;
         }
-        .search-input:focus { background-color: var(--bg-surface); box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15); outline: none; }
+        .search-input:focus { 
+            border-color: var(--blue-pastel); 
+            background-color: white;
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.1); 
+            outline: none; 
+        }
 
-        /* --- CONTENEDOR PRINCIPAL Y FILAS --- */
+        /* --- FILAS Y COLUMNAS INTUITIVAS --- */
         .main-wrapper { max-width: 900px; margin: 0 auto; padding: 0 15px; }
 
         .item-card { 
-            background: var(--bg-surface); 
-            border-radius: 18px; 
-            padding: 20px 24px; 
-            margin-bottom: 12px; 
-            display: flex;
+            background: var(--card-pastel); 
+            border-radius: 24px; 
+            padding: 20px 25px; 
+            margin-bottom: 15px; 
+            display: grid;
+            grid-template-columns: 1fr auto; /* Dos columnas perfectas */
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.02);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
             gap: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .item-card:hover { transform: scale(1.005); box-shadow: 0 6px 16px rgba(0,0,0,0.05); }
-        .row-empty { opacity: 0.6; filter: grayscale(80%); }
+        .item-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(79, 70, 229, 0.08); }
+        .row-empty { opacity: 0.65; background: #fafafa; }
 
-        /* --- SECCIÓN IZQUIERDA: REORDENAMIENTO VISUAL --- */
-        .info-col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        /* Columna Izquierda: Información Visual */
+        .info-col { display: flex; flex-direction: column; gap: 6px; }
         
-        /* 1. Tipo de repuesto */
         .type-badge {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
+            align-self: flex-start;
+            font-size: 0.7rem;
+            color: var(--blue-vibrant);
+            background: var(--blue-pastel);
+            padding: 4px 10px;
+            border-radius: 12px;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.5px;
-            margin-bottom: 4px;
         }
 
-        /* 2. Marca (Tipografías Originales Simuladas) */
-        .brand-model-wrapper { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;}
+        .brand-model-wrapper { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;}
         
-        .typo-apple { font-family: -apple-system, "SF Pro Display", sans-serif; font-weight: 500; color: #000; font-size: 1.15rem; }
-        .typo-samsung { font-family: "Arial Black", Arial, sans-serif; font-weight: 900; color: #1428A0; letter-spacing: -0.5px; font-size: 1.05rem; }
-        .typo-xiaomi { font-family: "Century Gothic", "Futura", sans-serif; font-weight: 800; color: #FF6900; font-size: 1.1rem; }
-        .typo-huawei { font-family: Arial, sans-serif; font-weight: 900; color: #E60000; letter-spacing: -0.5px; font-size: 1.05rem; }
-        .typo-motorola { font-family: "Verdana", sans-serif; font-style: italic; font-weight: 800; color: #001428; font-size: 1.1rem; }
-        .typo-generic { font-family: inherit; font-weight: 700; color: var(--text-secondary); font-size: 1rem; }
+        /* Tipografías de Marcas con Colores Llamativos */
+        .typo-apple { font-family: -apple-system, sans-serif; font-weight: 600; color: #111; font-size: 1.15rem; }
+        .typo-samsung { font-family: "Arial Black", sans-serif; font-weight: 900; color: #2563eb; font-size: 1.1rem; }
+        .typo-xiaomi { font-family: "Century Gothic", sans-serif; font-weight: 800; color: var(--orange-vibrant); font-size: 1.15rem; }
+        .typo-huawei { font-family: Arial, sans-serif; font-weight: 900; color: var(--red-vibrant); font-size: 1.1rem; }
+        .typo-motorola { font-family: "Verdana", sans-serif; font-style: italic; font-weight: 800; color: var(--pink-vibrant); font-size: 1.15rem; }
+        .typo-generic { font-weight: 700; color: var(--text-muted); font-size: 1rem; }
 
-        /* 3. Modelo */
-        .model-text { font-weight: 600; font-size: 1.15rem; color: var(--text-primary); }
-        .product-ref { font-size: 0.7rem; color: var(--text-tertiary); font-family: ui-monospace, monospace; }
+        .model-text { font-weight: 700; font-size: 1.2rem; color: var(--text-dark); }
+        .product-ref { font-size: 0.75rem; color: #94a3b8; font-family: monospace; letter-spacing: 1px; }
 
-        /* --- SECCIÓN DERECHA: PRECIO Y STOCK DISCRETO --- */
-        .meta-col { text-align: right; min-width: 120px; display: flex; flex-direction: column; align-items: flex-end;}
+        /* Columna Derecha: Precio y Stock */
+        .meta-col { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         
         .price-display { 
-            font-size: 1.6rem; 
-            font-weight: 800; 
-            color: var(--text-primary); 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: var(--blue-vibrant); /* Precio llamativo */
             letter-spacing: -1px;
             line-height: 1;
-            margin-bottom: 8px;
         }
 
-        /* Stock ultra discreto */
+        /* Stock ultra discreto pero colorido */
         .stock-discreet {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
         }
-        .dot { width: 8px; height: 8px; border-radius: 50%; }
-        .dot-high { background-color: #34c759; }
-        .dot-med { background-color: #ffcc00; }
-        .dot-zero { background-color: #ff3b30; }
+        .stock-high { background: var(--green-pastel); color: var(--green-vibrant); }
+        .stock-med { background: var(--orange-pastel); color: var(--orange-vibrant); }
+        .stock-zero { background: var(--red-pastel); color: var(--red-vibrant); }
 
-        .loader-msg { text-align: center; padding: 50px; font-size: 1rem; color: var(--text-secondary); font-weight: 500;}
+        .loader-msg { text-align: center; padding: 50px; font-size: 1.1rem; color: var(--text-muted); font-weight: 600;}
 
         /* --- MÓVILES --- */
         @media (max-width: 768px) {
-            .header-pro { padding: 2rem 0 1rem 0; }
+            .header-relax { padding: 2rem 0 1rem 0; }
             .header-title { font-size: 2.2rem; }
-            .item-card { padding: 18px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
-            .meta-col { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 12px; }
-            .price-display { margin-bottom: 0; font-size: 1.4rem; }
+            .item-card { 
+                grid-template-columns: 1fr; /* Una sola columna en móvil */
+                padding: 20px; 
+                gap: 15px; 
+                border-radius: 20px;
+            }
+            .meta-col { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: center; 
+                border-top: 2px dashed #f1f5f9; 
+                padding-top: 15px; 
+            }
+            .price-display { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-<header class="header-pro">
+<header class="header-relax">
     <div class="container">
         <h1 class="header-title">FULL CELL</h1>
         <div class="header-address">
-            📍 VARGAS 2054, Calama
-            <!-- Este div se actualiza automáticamente con Google Sheets -->
+            <span style="font-size: 1.1rem;">📍</span> Vargas 2054, Calama
             <span id="globalStoreStatus" class="store-badge store-closed" style="display:none;"></span>
         </div>
     </div>
@@ -201,13 +213,13 @@
 
 <div class="sticky-search">
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-input shadow-sm" placeholder="Buscar repuesto, marca o referencia..." autocomplete="off">
+        <input type="text" id="searchInput" class="search-input" placeholder="¿Qué repuesto necesitas hoy?" autocomplete="off">
     </div>
 </div>
 
 <main class="main-wrapper mb-5">
     <div id="inventoryContainer">
-        <div class="loader-msg">Sincronizando inventario corporativo...</div>
+        <div class="loader-msg">✨ Organizando inventario...</div>
     </div>
 </main>
 
@@ -216,7 +228,7 @@
 
     let inventoryData = [];
 
-    // 1. LÓGICA DE MARCAS (Tipografía Mundial Simulada)
+    // LÓGICA DE MARCAS (Tipografía Mundial con colores llamativos)
     function formatBrand(marcaStr) {
         if (!marcaStr) return { class: 'typo-generic', text: '' };
         const m = marcaStr.toUpperCase();
@@ -230,24 +242,20 @@
         return { class: 'typo-generic', text: marcaStr };
     }
 
-    // 2. LÓGICA DE REORDENAMIENTO (Extrae Tipo y Modelo del nombre crudo)
+    // EXTRACCIÓN DE TIPO Y MODELO
     function parseProductStructure(nombreBruto) {
         if (!nombreBruto) return { tipo: 'REPUESTO', modelo: 'Desconocido' };
         const parts = nombreBruto.trim().split(' ');
-        
-        // Asumimos que la primera palabra es el "Tipo" (Pantalla, Flex, Bateria, etc.)
         const tipo = parts[0].toUpperCase();
-        // El resto de la oración es el "Modelo"
         const modelo = parts.slice(1).join(' ');
-        
-        return { tipo, modelo: modelo || nombreBruto }; // Si solo hay una palabra, usa el nombre completo
+        return { tipo, modelo: modelo || nombreBruto };
     }
 
-    // 3. LÓGICA DE STOCK DISCRETO
+    // STOCK PASTEL/VIBRANTE
     function getDiscreetStock(qty) {
-        if (qty === 0) return { dot: 'dot-zero', text: 'Agotado' };
-        if (qty <= 3) return { dot: 'dot-med', text: `Últimos ${qty}` };
-        return { dot: 'dot-high', text: 'Disponible' };
+        if (qty === 0) return { class: 'stock-zero', text: 'Agotado' };
+        if (qty <= 3) return { class: 'stock-med', text: `Últimos ${qty}` };
+        return { class: 'stock-high', text: 'En Stock' };
     }
 
     function loadDatabase() {
@@ -258,8 +266,7 @@
             complete: function(results) {
                 const filas = results.data;
                 
-                // --- LECTURA DEL MARCADOR ABIERTO/CERRADO ---
-                // Lee la columna G (índice 6) de la primera fila de datos reales (índice 1)
+                // LECTURA DE ESTADO DEL LOCAL (Columna G, Fila 2 del Excel)
                 if(filas[1] && filas[1][6]) {
                     const statusVal = filas[1][6].toUpperCase().trim();
                     const statusBadge = document.getElementById('globalStoreStatus');
@@ -284,13 +291,13 @@
                     };
                 }).filter(item => item.nombreRaw !== '');
 
-                // ORDENAR: Por Tipo de Repuesto, y luego por Modelo.
+                // ORDENAR: Por Nombre de Repuesto
                 inventoryData.sort((a, b) => a.nombreRaw.localeCompare(b.nombreRaw));
 
                 renderLayout(inventoryData);
             },
             error: function() {
-                document.getElementById('inventoryContainer').innerHTML = `<div class="loader-msg">No se pudo establecer conexión.</div>`;
+                document.getElementById('inventoryContainer').innerHTML = `<div class="loader-msg">Error de conexión. Intente más tarde.</div>`;
             }
         });
     }
@@ -298,7 +305,7 @@
     function renderLayout(list) {
         const container = document.getElementById('inventoryContainer');
         if (list.length === 0) {
-            container.innerHTML = `<div class="loader-msg">Búsqueda sin resultados.</div>`;
+            container.innerHTML = `<div class="loader-msg">No encontramos ese repuesto.</div>`;
             return;
         }
 
@@ -311,26 +318,23 @@
             return `
                 <div class="item-card ${isEmptyClass}">
                     
-                    <!-- REORDENAMIENTO INTUITIVO -->
+                    <!-- COLUMNA IZQUIERDA -->
                     <div class="info-col">
-                        <!-- 1. Tipo de repuesto (Arriba, pequeño) -->
                         <div class="type-badge">${structure.tipo}</div>
                         
-                        <!-- 2 y 3. Marca (Tipografía Original) + Modelo -->
                         <div class="brand-model-wrapper">
                             ${brandInfo.text ? `<span class="${brandInfo.class}">${brandInfo.text}</span>` : ''}
                             <span class="model-text">${structure.modelo}</span>
                         </div>
                         
-                        <!-- Referencia Discreta -->
                         <div class="product-ref">REF: ${item.codigo}</div>
                     </div>
 
-                    <!-- PRECIO Y STOCK DISCRETO -->
+                    <!-- COLUMNA DERECHA -->
                     <div class="meta-col">
                         <div class="price-display">${item.precio}</div>
-                        <div class="stock-discreet">
-                            <span class="dot ${stockInfo.dot}"></span> ${stockInfo.text}
+                        <div class="stock-discreet ${stockInfo.class}">
+                            ${stockInfo.text}
                         </div>
                     </div>
 
