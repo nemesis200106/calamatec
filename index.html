@@ -3,36 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario Profesional - FULL CELL CALAMA</title>
+    <title>Catálogo Corporativo - FULL CELL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     
     <style>
         :root { 
-            --bg-body: #f5f5f7;
-            --bg-card: #ffffff;
-            --text-main: #1d1d1f;
-            --text-muted: #86868b;
-            --border-soft: rgba(0, 0, 0, 0.06);
+            /* Paleta Apple-Pro */
+            --bg-base: #f5f5f7;
+            --bg-surface: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #a1a1a6;
+            --border-light: rgba(0, 0, 0, 0.05);
             --search-bg: #e8e8ed;
+            --accent-blue: #0071e3;
         }
         
         body { 
-            background-color: var(--bg-body); 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            color: var(--text-main); 
+            background-color: var(--bg-base); 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; 
+            color: var(--text-primary); 
             margin: 0; 
             padding: 0;
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Encabezado Empresarial */
-        .header-app { padding: 3rem 0 1.5rem 0; text-align: center; }
-        .brand-title { font-weight: 800; letter-spacing: -0.03em; color: var(--text-main); font-size: 2.5rem; margin-bottom: 2px;}
-        .subtitle { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;}
+        /* --- ENCABEZADO EMPRESARIAL --- */
+        .header-pro { 
+            padding: 3.5rem 0 2rem 0; 
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-title { 
+            font-weight: 800; 
+            letter-spacing: -0.04em; 
+            color: var(--text-primary); 
+            font-size: 2.8rem; 
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+        .header-address { 
+            font-size: 0.85rem; 
+            color: var(--text-secondary); 
+            font-weight: 600; 
+            letter-spacing: 0.05em; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        /* --- MARCADOR DE ESTADO DEL LOCAL (Controlado por Sheet) --- */
+        .store-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+        }
+        .store-open { background: #e5f8eb; color: #147a32; }
+        .store-open::before { content: ''; width: 6px; height: 6px; background: #34c759; border-radius: 50%; box-shadow: 0 0 4px #34c759; }
+        .store-closed { background: #fff1f2; color: #e11d48; }
+        .store-closed::before { content: ''; width: 6px; height: 6px; background: #e11d48; border-radius: 50%; }
         
-        /* Barra de Búsqueda tipo Spotlight */
-        .sticky-search-wrapper {
+        /* --- BARRA DE BÚSQUEDA TIPO SPOTLIGHT --- */
+        .sticky-search {
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -40,229 +83,255 @@
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             padding: 15px 0;
-            border-bottom: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-light);
             margin-bottom: 30px;
         }
 
-        .search-container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        .search-bar { 
-            border-radius: 16px; border: none; background-color: var(--search-bg);
-            padding: 16px 20px 16px 45px; font-size: 1.1rem; width: 100%;
-            color: var(--text-main); transition: all 0.2s ease;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%2386868b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: 16px center;
+        .search-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .search-input { 
+            border-radius: 14px; 
+            border: none;
+            background-color: var(--search-bg);
+            padding: 14px 20px 14px 45px; 
+            font-size: 1.05rem; 
+            width: 100%;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2386868b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 16px center;
         }
-        .search-bar:focus { background-color: #ffffff; box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15); outline: none; }
+        .search-input:focus { background-color: var(--bg-surface); box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15); outline: none; }
 
-        .main-container { max-width: 1000px; margin: 0 auto; padding: 0 15px; }
+        /* --- CONTENEDOR PRINCIPAL Y FILAS --- */
+        .main-wrapper { max-width: 900px; margin: 0 auto; padding: 0 15px; }
 
-        /* Fila de producto (Card) */
-        .item-row { 
-            background: var(--bg-card); 
-            border-radius: 20px; 
-            padding: 20px; 
+        .item-card { 
+            background: var(--bg-surface); 
+            border-radius: 18px; 
+            padding: 20px 24px; 
             margin-bottom: 12px; 
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.02);
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.02);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             gap: 20px;
         }
-        .item-row:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
-        .row-empty { opacity: 0.55; filter: grayscale(100%); }
+        .item-card:hover { transform: scale(1.005); box-shadow: 0 6px 16px rgba(0,0,0,0.05); }
+        .row-empty { opacity: 0.6; filter: grayscale(80%); }
 
-        /* --- IDENTIDAD VISUAL DE MARCAS (A la izquierda) --- */
-        .col-logo { 
-            width: 70px; height: 70px; 
-            flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 16px;
-            background: var(--bg-body);
-        }
+        /* --- SECCIÓN IZQUIERDA: REORDENAMIENTO VISUAL --- */
+        .info-col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         
-        /* Estilos simulados de logotipos */
-        .logo-apple { font-size: 2.2rem; color: #000; padding-bottom: 4px; } /*  */
-        .logo-samsung { font-family: Arial, sans-serif; font-weight: 900; color: #fff; background: #1428a0; border-radius: 35px; width: 100%; height: 35px; font-size: 0.55rem; letter-spacing: 0.5px; }
-        .logo-xiaomi { font-family: 'Century Gothic', sans-serif; font-weight: bold; color: #fff; background: #ff6900; border-radius: 14px; width: 50px; height: 50px; font-size: 1.5rem; letter-spacing: -1px; }
-        .logo-huawei { font-family: Arial, sans-serif; font-weight: 800; color: #e60000; font-size: 0.7rem; text-align: center; line-height: 1; }
-        .logo-motorola { font-family: Arial, sans-serif; font-weight: 900; color: #fff; background: #001428; border-radius: 50%; width: 50px; height: 50px; font-size: 1.8rem; }
-        .logo-generic { font-weight: 800; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; }
+        /* 1. Tipo de repuesto */
+        .type-badge {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
 
-        /* Columnas de información */
-        .col-main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .col-stock { width: 180px; text-align: left; }
-        .col-price { width: 150px; text-align: right; }
+        /* 2. Marca (Tipografías Originales Simuladas) */
+        .brand-model-wrapper { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;}
+        
+        .typo-apple { font-family: -apple-system, "SF Pro Display", sans-serif; font-weight: 500; color: #000; font-size: 1.15rem; }
+        .typo-samsung { font-family: "Arial Black", Arial, sans-serif; font-weight: 900; color: #1428A0; letter-spacing: -0.5px; font-size: 1.05rem; }
+        .typo-xiaomi { font-family: "Century Gothic", "Futura", sans-serif; font-weight: 800; color: #FF6900; font-size: 1.1rem; }
+        .typo-huawei { font-family: Arial, sans-serif; font-weight: 900; color: #E60000; letter-spacing: -0.5px; font-size: 1.05rem; }
+        .typo-motorola { font-family: "Verdana", sans-serif; font-style: italic; font-weight: 800; color: #001428; font-size: 1.1rem; }
+        .typo-generic { font-family: inherit; font-weight: 700; color: var(--text-secondary); font-size: 1rem; }
 
-        /* Tipografía Interna */
-        .item-name { font-weight: 700; font-size: 1.15rem; color: var(--text-main); line-height: 1.2; margin-bottom: 4px;}
-        .product-sku { font-size: 0.75rem; color: var(--text-muted); font-family: ui-monospace, monospace; letter-spacing: 0.5px;}
+        /* 3. Modelo */
+        .model-text { font-weight: 600; font-size: 1.15rem; color: var(--text-primary); }
+        .product-ref { font-size: 0.7rem; color: var(--text-tertiary); font-family: ui-monospace, monospace; }
 
-        /* --- PRECIO RESALTADO --- */
-        .price-text { 
-            font-size: 1.7rem; 
-            font-weight: 900; 
-            color: #1d1d1f; 
+        /* --- SECCIÓN DERECHA: PRECIO Y STOCK DISCRETO --- */
+        .meta-col { text-align: right; min-width: 120px; display: flex; flex-direction: column; align-items: flex-end;}
+        
+        .price-display { 
+            font-size: 1.6rem; 
+            font-weight: 800; 
+            color: var(--text-primary); 
             letter-spacing: -1px;
-            display: block;
+            line-height: 1;
+            margin-bottom: 8px;
         }
-        .price-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; display: block; margin-bottom: -5px;}
 
-        /* --- STOCK CREATIVO (Barra de Capacidad iOS) --- */
-        .stock-header { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
-        .stock-track { width: 100%; height: 8px; background: #e8e8ed; border-radius: 4px; overflow: hidden; }
-        .stock-fill { height: 100%; border-radius: 4px; transition: width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); }
-        
-        .c-high { color: #34c759; } .bg-high { background-color: #34c759; }
-        .c-med { color: #007aff; } .bg-med { background-color: #007aff; }
-        .c-low { color: #ff9500; } .bg-low { background-color: #ff9500; }
-        .c-zero { color: #ff3b30; } .bg-zero { background-color: #ff3b30; }
+        /* Stock ultra discreto */
+        .stock-discreet {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot-high { background-color: #34c759; }
+        .dot-med { background-color: #ffcc00; }
+        .dot-zero { background-color: #ff3b30; }
 
-        .status-msg { text-align: center; padding: 50px; font-size: 1.1rem; color: var(--text-muted); font-weight: 500;}
+        .loader-msg { text-align: center; padding: 50px; font-size: 1rem; color: var(--text-secondary); font-weight: 500;}
 
         /* --- MÓVILES --- */
         @media (max-width: 768px) {
-            .header-app { padding: 2rem 0 1rem 0; }
-            .brand-title { font-size: 2rem; }
-            .item-row { flex-wrap: wrap; padding: 18px; gap: 15px;}
-            
-            .col-logo { width: 55px; height: 55px; }
-            .col-main { min-width: 60%; }
-            .item-name { font-size: 1.05rem; }
-            
-            .col-stock { width: 100%; order: 3; padding-top: 10px; border-top: 1px solid var(--border-soft); }
-            .col-price { width: 100%; order: 4; text-align: left; }
-            .price-label { display: inline-block; margin-right: 5px; margin-bottom: 0; }
-            .price-text { display: inline-block; font-size: 1.5rem; }
+            .header-pro { padding: 2rem 0 1rem 0; }
+            .header-title { font-size: 2.2rem; }
+            .item-card { padding: 18px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+            .meta-col { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 12px; }
+            .price-display { margin-bottom: 0; font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-<header class="header-app">
+<header class="header-pro">
     <div class="container">
-        <h1 class="brand-title">FULL CELL</h1>
-        <p class="subtitle">Inventario Técnico Organizado</p>
+        <h1 class="header-title">FULL CELL</h1>
+        <div class="header-address">
+            📍 VARGAS 2054, Calama
+            <!-- Este div se actualiza automáticamente con Google Sheets -->
+            <span id="globalStoreStatus" class="store-badge store-closed" style="display:none;"></span>
+        </div>
     </div>
 </header>
 
-<div class="sticky-search-wrapper">
+<div class="sticky-search">
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-bar shadow-sm" placeholder="Buscar pantalla, flex, modelo o referencia..." autocomplete="off">
+        <input type="text" id="searchInput" class="search-input shadow-sm" placeholder="Buscar repuesto, marca o referencia..." autocomplete="off">
     </div>
 </div>
 
-<main class="main-container mb-5">
-    <div id="inventoryList">
-        <div class="status-msg">Cargando base de datos...</div>
+<main class="main-wrapper mb-5">
+    <div id="inventoryContainer">
+        <div class="loader-msg">Sincronizando inventario corporativo...</div>
     </div>
 </main>
 
 <script>
     const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSs_mhwS-Op3r7iDRB3UZutQc8m5_oe5uDUqHzwbLOmHcsOm6uPtm_nYVQgwb9t1tjIWZ2waAnRlTJA/pub?output=csv'; 
 
-    let inventory = [];
+    let inventoryData = [];
 
-    // --- MOTOR VISUAL DE MARCAS ---
-    function getBrandVisual(marcaStr) {
-        if (!marcaStr) return `<div class="logo-generic">GEN</div>`;
-        const m = marcaStr.toLowerCase();
+    // 1. LÓGICA DE MARCAS (Tipografía Mundial Simulada)
+    function formatBrand(marcaStr) {
+        if (!marcaStr) return { class: 'typo-generic', text: '' };
+        const m = marcaStr.toUpperCase();
         
-        if (m.includes('apple') || m.includes('iphone') || m.includes('ipad')) {
-            return `<div class="logo-apple"></div>`;
-        } else if (m.includes('samsung')) {
-            return `<div class="logo-samsung">SAMSUNG</div>`;
-        } else if (m.includes('xiaomi') || m.includes('redmi') || m.includes('poco')) {
-            return `<div class="logo-xiaomi">mi</div>`;
-        } else if (m.includes('huawei')) {
-            return `<div class="logo-huawei">HUAWEI</div>`;
-        } else if (m.includes('motorola') || m.includes('moto')) {
-            return `<div class="logo-motorola">M</div>`;
-        } else {
-            return `<div class="logo-generic">${marcaStr.substring(0,3)}</div>`;
-        }
+        if (m.includes('APPLE') || m.includes('IPHONE')) return { class: 'typo-apple', text: 'Apple' };
+        if (m.includes('SAMSUNG')) return { class: 'typo-samsung', text: 'SAMSUNG' };
+        if (m.includes('XIAOMI') || m.includes('REDMI') || m.includes('POCO')) return { class: 'typo-xiaomi', text: 'Xiaomi' };
+        if (m.includes('HUAWEI')) return { class: 'typo-huawei', text: 'HUAWEI' };
+        if (m.includes('MOTOROLA') || m.includes('MOTO')) return { class: 'typo-motorola', text: 'motorola' };
+        
+        return { class: 'typo-generic', text: marcaStr };
     }
 
-    // --- MOTOR DE BARRA DE STOCK ---
-    function getStockData(qty) {
-        let percentage = (qty / 15) * 100; // Asumimos 15 como "lleno" para la barra visual
-        if (percentage > 100) percentage = 100;
+    // 2. LÓGICA DE REORDENAMIENTO (Extrae Tipo y Modelo del nombre crudo)
+    function parseProductStructure(nombreBruto) {
+        if (!nombreBruto) return { tipo: 'REPUESTO', modelo: 'Desconocido' };
+        const parts = nombreBruto.trim().split(' ');
         
-        if (qty === 0) return { pct: 0, classText: 'c-zero', classBg: 'bg-zero', text: 'Agotado' };
-        if (qty <= 3) return { pct: percentage, classText: 'c-low', classBg: 'bg-low', text: `${qty} Unid.` };
-        if (qty <= 9) return { pct: percentage, classText: 'c-med', classBg: 'bg-med', text: `${qty} Unid.` };
-        return { pct: percentage, classText: 'c-high', classBg: 'bg-high', text: `${qty} Unid.` };
+        // Asumimos que la primera palabra es el "Tipo" (Pantalla, Flex, Bateria, etc.)
+        const tipo = parts[0].toUpperCase();
+        // El resto de la oración es el "Modelo"
+        const modelo = parts.slice(1).join(' ');
+        
+        return { tipo, modelo: modelo || nombreBruto }; // Si solo hay una palabra, usa el nombre completo
     }
 
-    function loadInventory() {
+    // 3. LÓGICA DE STOCK DISCRETO
+    function getDiscreetStock(qty) {
+        if (qty === 0) return { dot: 'dot-zero', text: 'Agotado' };
+        if (qty <= 3) return { dot: 'dot-med', text: `Últimos ${qty}` };
+        return { dot: 'dot-high', text: 'Disponible' };
+    }
+
+    function loadDatabase() {
         Papa.parse(SHEET_CSV, {
             download: true,
             header: false,
             skipEmptyLines: true,
             complete: function(results) {
-                const filas = results.data.slice(1);
+                const filas = results.data;
                 
-                inventory = filas.map(c => {
+                // --- LECTURA DEL MARCADOR ABIERTO/CERRADO ---
+                // Lee la columna G (índice 6) de la primera fila de datos reales (índice 1)
+                if(filas[1] && filas[1][6]) {
+                    const statusVal = filas[1][6].toUpperCase().trim();
+                    const statusBadge = document.getElementById('globalStoreStatus');
+                    statusBadge.style.display = 'flex';
+                    if(statusVal === 'ABIERTO') {
+                        statusBadge.className = 'store-badge store-open';
+                        statusBadge.innerText = 'Abierto';
+                    } else {
+                        statusBadge.className = 'store-badge store-closed';
+                        statusBadge.innerText = 'Cerrado';
+                    }
+                }
+
+                // Procesar Inventario
+                inventoryData = filas.slice(1).map(c => {
                     return {
                         codigo: c[0] ? c[0].trim() : 'S/N',
-                        nombre: c[1] ? c[1].trim() : 'Producto sin nombre',
+                        nombreRaw: c[1] ? c[1].trim() : '',
                         precio: c[2] ? c[2].trim() : '$0',
                         marca: c[4] ? c[4].trim() : '',
                         stock: parseInt(c[5]) || 0
                     };
-                }).filter(item => item.nombre !== 'Producto sin nombre' && item.nombre !== '');
+                }).filter(item => item.nombreRaw !== '');
 
-                // --- ORDENAMIENTO ALFABÉTICO AUTOMÁTICO POR NOMBRE DE REPUESTO ---
-                inventory.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                // ORDENAR: Por Tipo de Repuesto, y luego por Modelo.
+                inventoryData.sort((a, b) => a.nombreRaw.localeCompare(b.nombreRaw));
 
-                render(inventory);
+                renderLayout(inventoryData);
             },
             error: function() {
-                document.getElementById('inventoryList').innerHTML = `<div class="status-msg">Ocurrió un error al conectar con los servidores de Google.</div>`;
+                document.getElementById('inventoryContainer').innerHTML = `<div class="loader-msg">No se pudo establecer conexión.</div>`;
             }
         });
     }
 
-    function render(list) {
-        const container = document.getElementById('inventoryList');
+    function renderLayout(list) {
+        const container = document.getElementById('inventoryContainer');
         if (list.length === 0) {
-            container.innerHTML = `<div class="status-msg">No se encontraron piezas con esa descripción.</div>`;
+            container.innerHTML = `<div class="loader-msg">Búsqueda sin resultados.</div>`;
             return;
         }
 
         container.innerHTML = list.map(item => {
-            const stock = getStockData(item.stock);
-            const isEmpty = item.stock === 0 ? 'row-empty' : '';
-            const brandLogo = getBrandVisual(item.marca);
+            const structure = parseProductStructure(item.nombreRaw);
+            const brandInfo = formatBrand(item.marca);
+            const stockInfo = getDiscreetStock(item.stock);
+            const isEmptyClass = item.stock === 0 ? 'row-empty' : '';
 
             return `
-                <div class="item-row ${isEmpty}">
+                <div class="item-card ${isEmptyClass}">
                     
-                    <!-- Columna 1: Logotipo Real Adaptado -->
-                    <div class="col-logo">
-                        ${brandLogo}
-                    </div>
-
-                    <!-- Columna 2: Nombre Organizado y SKU -->
-                    <div class="col-main">
-                        <div class="item-name">${item.nombre}</div>
-                        <div class="product-sku">REF: ${item.codigo}</div>
-                    </div>
-
-                    <!-- Columna 3: Barra de Stock Creativa -->
-                    <div class="col-stock">
-                        <div class="stock-header">
-                            <span style="color: var(--text-muted)">Capacidad</span>
-                            <span class="${stock.classText}">${stock.text}</span>
+                    <!-- REORDENAMIENTO INTUITIVO -->
+                    <div class="info-col">
+                        <!-- 1. Tipo de repuesto (Arriba, pequeño) -->
+                        <div class="type-badge">${structure.tipo}</div>
+                        
+                        <!-- 2 y 3. Marca (Tipografía Original) + Modelo -->
+                        <div class="brand-model-wrapper">
+                            ${brandInfo.text ? `<span class="${brandInfo.class}">${brandInfo.text}</span>` : ''}
+                            <span class="model-text">${structure.modelo}</span>
                         </div>
-                        <div class="stock-track">
-                            <div class="stock-fill ${stock.classBg}" style="width: ${stock.pct}%;"></div>
-                        </div>
+                        
+                        <!-- Referencia Discreta -->
+                        <div class="product-ref">REF: ${item.codigo}</div>
                     </div>
 
-                    <!-- Columna 4: Precio Altamente Resaltado -->
-                    <div class="col-price">
-                        <span class="price-label">Neto</span>
-                        <span class="price-text">${item.precio}</span>
+                    <!-- PRECIO Y STOCK DISCRETO -->
+                    <div class="meta-col">
+                        <div class="price-display">${item.precio}</div>
+                        <div class="stock-discreet">
+                            <span class="dot ${stockInfo.dot}"></span> ${stockInfo.text}
+                        </div>
                     </div>
 
                 </div>
@@ -270,17 +339,18 @@
         }).join('');
     }
 
+    // Buscador
     document.getElementById('searchInput').addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase().trim();
-        const filtered = inventory.filter(i => 
-            i.nombre.toLowerCase().includes(term) || 
+        const filtered = inventoryData.filter(i => 
+            i.nombreRaw.toLowerCase().includes(term) || 
             i.codigo.toLowerCase().includes(term) ||
             i.marca.toLowerCase().includes(term)
         );
-        render(filtered);
+        renderLayout(filtered);
     });
 
-    loadInventory();
+    loadDatabase();
 </script>
 
 </body>
